@@ -173,13 +173,13 @@
     .principle strong { text-transform: uppercase; letter-spacing: .04em; }
     .principle p { color: var(--muted); }
 
-    .concept { background: var(--white); }
+    .concept { background: var(--paper); }
     .concept h2 { margin-top: 70px; font-size: clamp(40px, 12vw, 64px); }
     .concept-art {
       width: calc(100% + 44px);
       margin: 55px -22px 0;
       padding: 32px 0 20px;
-      background: var(--paper);
+      background: transparent;
     }
     .concept-art img { transform: scale(1.22); }
     .concept-copy { margin-top: 34px; }
@@ -224,7 +224,7 @@
     .frame {
       aspect-ratio: 4 / 3;
       overflow: hidden;
-      background: var(--white);
+      background: transparent;
     }
     .frame img { height: 100%; object-fit: contain; }
     .frame.illustration img { transform: scale(1.55); }
@@ -288,7 +288,7 @@
     }
     .polo-panel {
       overflow: hidden;
-      background: #d8d0c3;
+      background: transparent;
     }
     .polo-half {
       position: relative;
@@ -308,14 +308,14 @@
       display: flex;
       justify-content: space-between;
       padding: 13px 14px 14px;
-      border-top: 1px solid var(--line);
-      color: var(--muted);
+      border-top: 1px solid rgb(255 255 255 / .28);
+      color: rgb(255 255 255 / .72);
       font-size: 7px;
       letter-spacing: .08em;
       text-transform: uppercase;
     }
 
-    .closeups { background: var(--white); }
+    .closeups { background: var(--paper); }
     .closeups h2 { margin-top: 65px; font-size: 44px; }
     .close-list { margin-top: 40px; }
     .close-card + .close-card { margin-top: 42px; }
@@ -323,9 +323,9 @@
       position: relative;
       aspect-ratio: 1;
       overflow: hidden;
-      background: #d8d0c3;
+      background: transparent;
     }
-    .frame.polo { background: #d8d0c3; }
+    .frame.polo { background: transparent; }
     .crop img {
       position: absolute;
       top: 0;
@@ -345,13 +345,16 @@
     .alternatives h2 { margin-top: 70px; }
     .alternatives > p { margin-top: 18px; color: var(--muted); font-size: 12px; line-height: 1.6; }
     .alt-list { margin-top: 42px; }
-    .alt-card { background: var(--white); }
+    .alt-card {
+      background: transparent;
+      border-top: 1px solid var(--line);
+    }
     .alt-card + .alt-card { margin-top: 18px; }
     .alt-art {
       position: relative;
       aspect-ratio: 3 / 2;
       overflow: hidden;
-      background: var(--white);
+      background: transparent;
     }
     .alt-art img {
       position: absolute;
@@ -546,7 +549,7 @@
         <div class="arrow" aria-hidden="true">↓</div>
         <article class="step">
           <span class="step-number">03</span>
-          <div class="frame polo"><img src="assets/concept1e-greige.png" alt="Final volunteer polo"></div>
+          <div class="frame polo"><img src="assets/concept1e.png" alt="Final volunteer polo"></div>
           <h3>Final polo</h3><p>Balance identity, contrast and everyday wearability.</p>
         </article>
       </div>
@@ -580,11 +583,11 @@
       <h2>The proposed<br><em>volunteer polo.</em></h2>
       <div class="polo-grid">
         <figure class="polo-panel">
-          <div class="polo-half front"><img src="assets/concept1e-greige.png" alt="Front view of the proposed polo"></div>
+          <div class="polo-half front"><img src="assets/concept1e.png" alt="Front view of the proposed polo"></div>
           <figcaption><span>Front</span><span>Volunteer mark</span></figcaption>
         </figure>
         <figure class="polo-panel">
-          <div class="polo-half back"><img src="assets/concept1e-greige.png" alt="Back view of the proposed polo"></div>
+          <div class="polo-half back"><img src="assets/concept1e.png" alt="Back view of the proposed polo"></div>
           <figcaption><span>Back</span><span>Neighbourhood identity</span></figcaption>
         </figure>
       </div>
@@ -595,15 +598,15 @@
       <h2>Designed to be recognised.</h2>
       <div class="close-list">
         <article class="close-card">
-          <div class="crop chest"><img src="assets/concept1e-greige.png" alt="Chest mark close-up"></div>
+          <div class="crop chest"><img src="assets/concept1e.png" alt="Chest mark close-up"></div>
           <div class="close-copy"><span>01</span><h3>Volunteer mark</h3><p>A discreet chest placement keeps the front clean and official.</p></div>
         </article>
         <article class="close-card">
-          <div class="crop back"><img src="assets/concept1e-greige.png" alt="Back identity close-up"></div>
+          <div class="crop back"><img src="assets/concept1e.png" alt="Back identity close-up"></div>
           <div class="close-copy"><span>02</span><h3>Neighbourhood identity</h3><p>The name leads from a distance; landmarks reward a closer look.</p></div>
         </article>
         <article class="close-card">
-          <div class="crop trim"><img src="assets/concept1e-greige.png" alt="Collar and sleeve trim close-up"></div>
+          <div class="crop trim"><img src="assets/concept1e.png" alt="Collar and sleeve trim close-up"></div>
           <div class="close-copy"><span>03</span><h3>Recognition trim</h3><p>Red collar and sleeve bands create an event-ready silhouette.</p></div>
         </article>
       </div>
