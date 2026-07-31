@@ -3,20 +3,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#f6f1e8">
+  <meta name="theme-color" content="#f4efe6">
   <link rel="icon" href="data:,">
   <title>Centraville Volunteer Polo — Committee Proposal</title>
   <style>
     :root {
-      --paper: #faf8f3;
-      --warm: #f2ede3;
-      --sand: #e8dfd1;
-      --ink: #25231f;
-      --muted: #6f6b63;
-      --line: #d8d0c4;
+      --paper: #fbf9f5;
+      --warm: #f4efe6;
+      --ink: #26231f;
+      --muted: #716d65;
+      --line: #d9d0c4;
       --red: #ca2029;
-      --blue: #274a7d;
-      --green: #93b88b;
+      --blue: #264979;
+      --orange: #f2a11e;
+      --green: #96ba8e;
       --safe-top: max(18px, env(safe-area-inset-top));
       --safe-bottom: max(18px, env(safe-area-inset-bottom));
     }
@@ -26,13 +26,14 @@
     body {
       margin: 0;
       color: var(--ink);
-      background: #ded8ce;
+      background: #ddd7ce;
       font-family: Arial, Helvetica, sans-serif;
       -webkit-font-smoothing: antialiased;
     }
     img { display: block; width: 100%; }
     h1, h2, h3, p, figure, ul { margin: 0; }
-    button { font: inherit; }
+    button, a { font: inherit; }
+    button { color: inherit; }
 
     .proposal {
       width: min(100%, 580px);
@@ -40,10 +41,19 @@
       background: var(--paper);
       box-shadow: 0 0 44px rgb(59 49 37 / .08);
     }
+    section {
+      position: relative;
+      min-height: 100svh;
+      padding: calc(var(--safe-top) + 20px) 24px calc(var(--safe-bottom) + 54px);
+      overflow: hidden;
+      border-bottom: 1px solid var(--line);
+    }
+    section:nth-of-type(odd) { background: var(--paper); }
+    section:nth-of-type(even) { background: var(--warm); }
 
     .progress {
       position: fixed;
-      z-index: 50;
+      z-index: 80;
       top: 0;
       left: 0;
       width: 100%;
@@ -57,16 +67,6 @@
       background: var(--red);
     }
 
-    section {
-      position: relative;
-      min-height: 100svh;
-      padding: calc(var(--safe-top) + 20px) 24px calc(var(--safe-bottom) + 46px);
-      overflow: hidden;
-      border-bottom: 1px solid var(--line);
-    }
-    section:nth-of-type(odd) { background: var(--paper); }
-    section:nth-of-type(even) { background: var(--warm); }
-
     .topline {
       display: flex;
       align-items: flex-start;
@@ -78,7 +78,11 @@
       letter-spacing: .12em;
       text-transform: uppercase;
     }
-    .topline span:first-child { color: var(--red); }
+    .topline > span:first-child { color: var(--red); }
+    .brand { display: flex; flex-direction: column; line-height: 1; }
+    .brand small { font-size: 7px; font-weight: 800; letter-spacing: .24em; }
+    .brand strong { margin-top: 4px; color: var(--red); font-size: 17px; letter-spacing: -.04em; }
+    .brand i { margin-top: 4px; font-size: 6px; font-style: normal; font-weight: 800; letter-spacing: .18em; }
 
     h1, h2 {
       font-weight: 500;
@@ -87,27 +91,23 @@
     }
     h1 { font-size: clamp(48px, 14vw, 76px); }
     h2 { font-size: clamp(42px, 12vw, 68px); }
-    h3 { font-size: 18px; line-height: 1.15; }
-
-    .intro {
-      margin-top: 64px;
-      max-width: 460px;
-    }
-    .intro p {
-      margin-top: 18px;
-      color: var(--muted);
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 20px;
-      line-height: 1.42;
-    }
+    h3 { font-size: 18px; line-height: 1.18; }
     .kicker {
       display: block;
       margin-bottom: 12px;
       color: var(--red);
       font-size: 10px;
       font-weight: 700;
-      letter-spacing: .15em;
+      letter-spacing: .14em;
       text-transform: uppercase;
+    }
+    .intro { margin-top: 62px; }
+    .intro > p {
+      margin-top: 18px;
+      color: var(--muted);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 19px;
+      line-height: 1.42;
     }
 
     .cover {
@@ -115,34 +115,7 @@
       flex-direction: column;
       background: var(--warm) !important;
     }
-    .brand {
-      display: flex;
-      flex-direction: column;
-      line-height: 1;
-    }
-    .brand small {
-      font-size: 7px;
-      font-weight: 800;
-      letter-spacing: .24em;
-    }
-    .brand strong {
-      margin-top: 4px;
-      color: var(--red);
-      font-size: 17px;
-      letter-spacing: -.04em;
-    }
-    .brand i {
-      margin-top: 4px;
-      font-size: 6px;
-      font-style: normal;
-      font-weight: 800;
-      letter-spacing: .18em;
-    }
-    .cover-copy {
-      position: relative;
-      z-index: 2;
-      margin-top: 11vh;
-    }
+    .cover-copy { position: relative; z-index: 2; margin-top: 10vh; }
     .cover-copy p {
       margin-top: 17px;
       color: var(--muted);
@@ -151,27 +124,38 @@
       font-style: italic;
     }
     .cover-polo {
-      position: relative;
       width: calc(100% + 48px);
-      margin: auto -24px 0;
-      aspect-ratio: 1.13;
-      overflow: hidden;
+      margin: auto -24px -32px;
     }
-    .cover-polo img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 200%;
-      max-width: none;
-    }
-    .cover-note {
-      display: flex;
+    .cover-action, .section-action {
+      display: inline-flex;
+      align-items: center;
       justify-content: space-between;
-      padding-top: 12px;
-      color: var(--muted);
-      font-size: 8px;
-      letter-spacing: .11em;
+      gap: 14px;
+      min-height: 50px;
+      margin-top: 34px;
+      border: 1px solid var(--ink);
+      border-radius: 999px;
+      padding: 0 18px;
+      color: var(--ink);
+      background: transparent;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-decoration: none;
       text-transform: uppercase;
+    }
+    .cover-action {
+      position: absolute;
+      z-index: 3;
+      right: 24px;
+      bottom: max(24px, var(--safe-bottom));
+      min-height: 46px;
+      margin: 0;
+      border: 0;
+      color: #fff;
+      background: var(--red);
+      box-shadow: 0 8px 22px rgb(106 22 27 / .18);
     }
 
     .objective {
@@ -181,7 +165,7 @@
     .objective .intro { margin-top: 18vh; }
     .objective-statement {
       margin-top: auto;
-      padding-top: 44px;
+      padding-top: 42px;
       border-top: 1px solid var(--ink);
       font-size: clamp(26px, 7vw, 38px);
       line-height: 1.18;
@@ -189,127 +173,266 @@
     }
     .objective-statement strong { color: var(--red); font-weight: 500; }
 
-    .concepts .intro p { max-width: 360px; }
-    .direction-list { margin-top: 54px; }
-    .direction-card {
-      display: grid;
-      grid-template-columns: 42px 1fr;
-      gap: 16px;
-      padding: 26px 0;
+    .concept-list { margin-top: 48px; }
+    .concept-card {
+      display: block;
+      padding: 28px 0;
       border-top: 1px solid var(--line);
+      color: inherit;
+      text-decoration: none;
     }
-    .direction-card:last-child { border-bottom: 1px solid var(--line); }
-    .direction-number {
-      display: grid;
-      place-items: center;
-      width: 38px;
-      height: 38px;
-      border: 1px solid currentColor;
-      border-radius: 50%;
-      color: var(--red);
-      font-size: 11px;
-      font-weight: 700;
-    }
-    .direction-card:nth-child(2) .direction-number { color: var(--blue); }
-    .direction-card p {
-      margin-top: 8px;
-      color: var(--muted);
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 16px;
-      line-height: 1.4;
-    }
-
-    .exploration-section { min-height: auto; }
-    .exploration-section .intro { margin-top: 56px; }
-    .exploration-list { margin-top: 50px; }
-    .exploration + .exploration {
-      margin-top: 54px;
-      padding-top: 34px;
-      border-top: 1px solid var(--line);
-    }
-    .visual {
-      position: relative;
-      width: calc(100% + 48px);
-      margin-left: -24px;
-      overflow: hidden;
-      background: transparent;
-    }
-    .back-view {
-      aspect-ratio: 1.02;
-    }
-    .back-view img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 200%;
-      max-width: none;
-      transform: translateX(-50%);
-    }
-    .full-polo {
-      aspect-ratio: 2.03;
-    }
-    .panorama {
-      aspect-ratio: 3.1;
+    .concept-card:last-child { border-bottom: 1px solid var(--line); }
+    .concept-card-head {
       display: flex;
       align-items: center;
+      justify-content: space-between;
+      gap: 18px;
     }
-    .visual-caption {
-      display: grid;
-      grid-template-columns: 28px 1fr;
-      gap: 12px;
-      margin-top: 18px;
-    }
-    .visual-caption span {
-      color: var(--red);
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: .1em;
-    }
-    .direction-two .visual-caption span { color: var(--blue); }
-    .visual-caption h3 { font-size: 17px; }
-    .visual-caption p {
-      margin-top: 5px;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.5;
-    }
-
-    .comparison {
-      display: flex;
-      min-height: 100svh;
-      flex-direction: column;
-    }
-    .comparison .intro { margin-top: 60px; }
-    .compare-list { margin-top: 48px; }
-    .compare-column {
-      padding: 26px 0;
-      border-top: 1px solid var(--line);
-    }
-    .compare-column:last-child { border-bottom: 1px solid var(--line); }
-    .compare-column small {
+    .concept-card small {
       color: var(--red);
       font-size: 9px;
       font-weight: 700;
       letter-spacing: .12em;
       text-transform: uppercase;
     }
-    .compare-column:nth-child(2) small { color: var(--blue); }
-    .compare-column h3 { margin-top: 8px; font-size: 23px; }
-    .compare-column ul {
-      margin-top: 18px;
-      padding: 0;
-      list-style: none;
-    }
-    .compare-column li {
-      padding: 9px 0;
+    .concept-card h3 { margin-top: 8px; font-size: 24px; }
+    .concept-card p {
+      margin-top: 8px;
       color: var(--muted);
       font-family: Georgia, "Times New Roman", serif;
       font-size: 16px;
-      border-top: 1px solid rgb(216 208 196 / .6);
+      line-height: 1.4;
+    }
+    .concept-card-head > span {
+      color: var(--red);
+      font-size: 24px;
+    }
+
+    .concept-viewer {
+      min-height: auto;
+      padding-bottom: 80px;
+      background: var(--paper) !important;
+    }
+    .concept-heading { margin-top: 56px; }
+    .concept-heading p {
+      margin-top: 16px;
+      color: var(--muted);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 18px;
+      line-height: 1.42;
+    }
+
+    .option-block {
+      margin-top: 42px;
+      padding-top: 22px;
+      border-top: 1px solid var(--ink);
+    }
+    .control-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--muted);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .control-label strong { color: var(--red); }
+    .option-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+      margin-top: 13px;
+    }
+    .option-button {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 57px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px 11px;
+      background: transparent;
+      font-size: 11px;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+    }
+    .option-button[aria-pressed="true"] {
+      border-color: var(--ink);
+      background: #fff;
+      box-shadow: 0 5px 16px rgb(57 47 34 / .07);
+    }
+    .option-button[aria-pressed="true"]::after {
+      content: "✓";
+      margin-left: auto;
+      color: var(--red);
+    }
+    .swatch {
+      width: 27px;
+      height: 27px;
+      flex: 0 0 27px;
+      border: 1px solid rgb(0 0 0 / .1);
+      border-radius: 50%;
+    }
+    .red-white { background: linear-gradient(90deg, var(--red) 50%, #fff 50%); }
+    .red-red { background: var(--red); }
+    .red-orange { background: linear-gradient(90deg, var(--red) 70%, var(--orange) 70%); }
+    .blue-green { background: linear-gradient(90deg, var(--blue) 70%, var(--green) 70%); }
+
+    .variation-header {
+      margin-top: 40px;
+      text-align: center;
+    }
+    .variation-code {
+      color: var(--red);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    .variation-title {
+      margin-top: 8px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 22px;
+      font-weight: 400;
+    }
+    .variation-position {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .variation-nav {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 10px;
+      margin-top: 18px;
+    }
+    .variation-nav button {
+      min-height: 48px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0 15px;
+      background: transparent;
+      font-size: 10px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .variation-nav button:first-child { text-align: left; }
+    .variation-nav button:last-child { text-align: right; }
+    .variation-nav button:disabled { opacity: .3; cursor: default; }
+    .variation-nav span {
+      min-width: 38px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .carousel {
+      width: calc(100% + 48px);
+      margin: 24px -24px 0;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-behavior: smooth;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .carousel::-webkit-scrollbar { display: none; }
+    .carousel-track { display: flex; align-items: flex-start; }
+    .variation-slide {
+      flex: 0 0 100%;
+      min-width: 0;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+    .garment-view {
+      padding: 28px 24px 34px;
+      background: var(--warm);
+    }
+    .garment-view + .garment-view {
+      border-top: 1px solid var(--line);
+    }
+    .garment-view img {
+      width: 100%;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+    .garment-view figcaption {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-align: center;
+      text-transform: uppercase;
+    }
+    .swipe-hint {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 9px;
+      text-align: center;
+    }
+    .bottom-nav { margin-top: 20px; }
+
+    .concept-two-showcase {
+      width: calc(100% + 48px);
+      margin: 42px -24px 0;
+    }
+    .concept-two-showcase .garment-view { background: var(--paper); }
+    .concept-two-label {
+      margin-top: 28px;
+      text-align: center;
+    }
+    .concept-two-label strong {
+      color: var(--red);
+      font-size: 10px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    .concept-two-label p {
+      margin-top: 9px;
+      color: var(--muted);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 17px;
+      line-height: 1.4;
+    }
+
+    .comparison .intro { margin-top: 56px; }
+    .compare-list { margin-top: 48px; }
+    .compare-item {
+      padding: 26px 0;
+      border-top: 1px solid var(--line);
+    }
+    .compare-item:last-child { border-bottom: 1px solid var(--line); }
+    .compare-item small {
+      color: var(--red);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .compare-item h3 { margin-top: 8px; font-size: 23px; }
+    .compare-item ul {
+      margin-top: 16px;
+      padding: 0;
+      list-style: none;
+    }
+    .compare-item li {
+      padding: 8px 0;
+      border-top: 1px solid rgb(217 208 196 / .65);
+      color: var(--muted);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
     }
     .comparison-note {
-      margin-top: auto;
-      padding-top: 38px;
+      margin-top: 30px;
       color: var(--muted);
       font-size: 12px;
       line-height: 1.55;
@@ -317,7 +440,6 @@
 
     .closing {
       display: flex;
-      min-height: 100svh;
       flex-direction: column;
       justify-content: center;
       text-align: center;
@@ -347,35 +469,18 @@
       line-height: 1.6;
     }
 
-    .toolbar {
-      position: fixed;
-      z-index: 60;
-      right: 14px;
-      bottom: max(14px, env(safe-area-inset-bottom));
-    }
-    .toolbar button {
-      border: 0;
-      border-radius: 999px;
-      padding: 11px 15px;
-      color: #fff;
-      background: var(--red);
-      box-shadow: 0 8px 22px rgb(106 22 27 / .2);
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      cursor: pointer;
-    }
+    .print-catalog { display: none; }
 
     @media (min-width: 700px) {
       body { padding: 30px 0; }
       .proposal { overflow: hidden; border-radius: 5px; }
-      section { padding-left: 38px; padding-right: 38px; }
-      .cover-polo, .visual {
+      section { padding-right: 38px; padding-left: 38px; }
+      .cover-polo, .carousel, .concept-two-showcase {
         width: calc(100% + 76px);
         margin-left: -38px;
       }
-      .toolbar { right: calc(50% - 340px); }
+      .garment-view { padding-right: 38px; padding-left: 38px; }
+      .cover-action { right: 38px; }
     }
 
     @media print {
@@ -389,47 +494,43 @@
       .proposal { width: 100%; max-width: none; box-shadow: none; }
       section {
         width: 210mm;
-        height: 297mm;
         min-height: 297mm;
+        height: 297mm;
         padding: 14mm 13mm;
         page-break-after: always;
         break-after: page;
       }
-      .progress, .toolbar { display: none; }
+      .progress, .cover-action, .concept-viewer { display: none !important; }
       h1 { font-size: 25mm; }
-      h2 { font-size: 20mm; }
+      h2 { font-size: 19mm; }
       .cover-copy { margin-top: 25mm; }
-      .cover-polo { width: calc(100% + 26mm); margin-left: -13mm; }
-      .objective .intro { margin-top: 35mm; }
-      .direction-list { margin-top: 22mm; }
-      .exploration-section { height: 297mm; }
-      .exploration-list {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 6mm;
-        margin-top: 14mm;
+      .print-catalog { display: block; }
+      .print-page {
+        width: 210mm;
+        min-height: 297mm;
+        padding: 12mm 13mm;
+        page-break-after: always;
+        break-after: page;
+        background: var(--paper);
       }
-      .exploration + .exploration {
-        margin-top: 0;
-        padding-top: 0;
-        border-top: 0;
-      }
-      .visual {
-        width: 100%;
-        margin-left: 0;
-      }
-      .back-view { aspect-ratio: 1; }
-      .direction-two .exploration-list { grid-template-columns: repeat(3, 1fr); }
-      .visual-caption { grid-template-columns: 1fr; }
-      .visual-caption span { display: none; }
-      .compare-list {
+      .print-page h2 { margin-top: 8mm; font-size: 17mm; }
+      .print-page > p { margin-top: 4mm; color: var(--muted); font-size: 4mm; }
+      .print-pair {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 12mm;
-        margin-top: 24mm;
+        align-items: end;
+        gap: 4mm;
+        margin-top: 10mm;
       }
-      .compare-column:last-child { border-bottom: 0; }
-      .closing h2 { font-size: 27mm; }
+      .print-pair img { width: 100%; }
+      .print-pair figcaption {
+        grid-column: 1 / -1;
+        color: var(--muted);
+        font-size: 3mm;
+        font-weight: 700;
+        text-align: center;
+        text-transform: uppercase;
+      }
     }
   </style>
 </head>
@@ -437,7 +538,7 @@
   <div class="progress" aria-hidden="true"><i id="progressBar"></i></div>
 
   <main class="proposal">
-    <section class="cover">
+    <section class="cover" id="cover">
       <header class="topline">
         <div class="brand">
           <small>TECK GHEE</small>
@@ -446,24 +547,18 @@
         </div>
         <span>Committee Proposal</span>
       </header>
-
       <div class="cover-copy">
         <span class="kicker">Volunteer Polo</span>
         <h1>Design<br>Proposal</h1>
-        <p>A shared look for the people who serve our community.</p>
+        <p>Prepared concepts and variations for committee discussion.</p>
       </div>
-
       <figure class="cover-polo">
-        <img src="assets/concept1e.png" alt="Front view of the white Centraville volunteer polo">
+        <img src="assets/normalized/red-white-front.png" alt="Front view of a Centraville volunteer polo">
       </figure>
-
-      <div class="cover-note">
-        <span>For discussion</span>
-        <span>July 2026</span>
-      </div>
+      <a class="cover-action" href="#objective">Start viewing <span>↓</span></a>
     </section>
 
-    <section class="objective">
+    <section class="objective" id="objective">
       <div class="topline"><span>02</span><span>Design Objective</span></div>
       <div class="intro">
         <span class="kicker">One simple purpose</span>
@@ -473,163 +568,322 @@
       <p class="objective-statement">Help residents quickly recognise the people who <strong>serve their community.</strong></p>
     </section>
 
-    <section class="concepts">
+    <section class="concepts" id="concepts">
       <div class="topline"><span>03</span><span>Design Concepts</span></div>
       <div class="intro">
-        <span class="kicker">Two possible directions</span>
-        <h2>Two ways to tell our story.</h2>
-        <p>Both directions celebrate Centraville from a different point of view.</p>
+        <span class="kicker">View one concept at a time</span>
+        <h2>Two ways to represent Centraville.</h2>
+        <p>Each concept contains complete, prepared options for discussion.</p>
       </div>
-
-      <div class="direction-list">
-        <article class="direction-card">
-          <span class="direction-number">01</span>
-          <div>
-            <h3>Neighbourhood Identity</h3>
-            <p>Recognisable places. Shared identity.</p>
+      <div class="concept-list">
+        <a class="concept-card" href="#concept-one">
+          <div class="concept-card-head">
+            <div><small>Concept 01</small><h3>Neighbourhood Identity</h3></div>
+            <span>→</span>
           </div>
-        </article>
-        <article class="direction-card">
-          <span class="direction-number">02</span>
-          <div>
-            <h3>Community Lifestyle</h3>
-            <p>Everyday moments. Community spirit.</p>
+          <p>Four colour options, each with four prepared back variations.</p>
+        </a>
+        <a class="concept-card" href="#concept-two">
+          <div class="concept-card-head">
+            <div><small>Concept 02</small><h3>Community Lifestyle</h3></div>
+            <span>→</span>
           </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="exploration-section direction-one">
-      <div class="topline"><span>04</span><span>Direction 1 Exploration</span></div>
-      <div class="intro">
-        <span class="kicker">Direction 01</span>
-        <h2>Neighbourhood Identity</h2>
-        <p>Familiar landmarks create a strong sense of place.</p>
-      </div>
-
-      <div class="exploration-list">
-        <figure class="exploration">
-          <div class="visual back-view">
-            <img src="assets/concept1a.png" alt="Centraville polo exploration with a clean wordmark and line illustration">
-          </div>
-          <figcaption class="visual-caption">
-            <span>01</span>
-            <div><h3>Clear identity</h3><p>Bold name with a subtle neighbourhood scene.</p></div>
-          </figcaption>
-        </figure>
-
-        <figure class="exploration">
-          <div class="visual back-view">
-            <img src="assets/concept1b.png" alt="Centraville polo exploration with a neighbourhood crest">
-          </div>
-          <figcaption class="visual-caption">
-            <span>02</span>
-            <div><h3>Landmark crest</h3><p>Key places gathered into one recognisable emblem.</p></div>
-          </figcaption>
-        </figure>
-
-        <figure class="exploration">
-          <div class="visual back-view">
-            <img src="assets/concept1e.png" alt="Centraville polo exploration with colourful neighbourhood landmarks">
-          </div>
-          <figcaption class="visual-caption">
-            <span>03</span>
-            <div><h3>Colourful neighbourhood</h3><p>A warm illustration with strong visual character.</p></div>
-          </figcaption>
-        </figure>
+          <p>Community scenes placed quietly along the front and back hem.</p>
+        </a>
       </div>
     </section>
 
-    <section class="exploration-section direction-two">
-      <div class="topline"><span>05</span><span>Direction 2 Exploration</span></div>
-      <div class="intro">
-        <span class="kicker">Direction 02</span>
-        <h2>Community Lifestyle</h2>
-        <p>People and everyday moments bring the neighbourhood to life.</p>
+    <section class="concept-viewer" id="concept-one">
+      <div class="topline"><span>04</span><span>Concept 01</span></div>
+      <div class="concept-heading">
+        <span class="kicker">Neighbourhood Identity</span>
+        <h2>Recognisable places. Shared identity.</h2>
+        <p>Choose an Option, then slide through its four complete back variations.</p>
       </div>
 
-      <div class="exploration-list">
-        <figure class="exploration">
-          <div class="visual panorama">
-            <img src="assets/concept2.png" alt="Line illustration of Centraville community places and everyday activities">
-          </div>
-          <figcaption class="visual-caption">
-            <span>01</span>
-            <div><h3>Everyday Centraville</h3><p>A continuous scene of places, people and daily life.</p></div>
-          </figcaption>
-        </figure>
-
-        <figure class="exploration">
-          <div class="visual back-view">
-            <img src="assets/concept2a.png" alt="Red and white community lifestyle polo exploration">
-          </div>
-          <figcaption class="visual-caption">
-            <span>02</span>
-            <div><h3>Community line</h3><p>A light, friendly scene across the lower back.</p></div>
-          </figcaption>
-        </figure>
-
-        <figure class="exploration">
-          <div class="visual back-view">
-            <img src="assets/concept2b.png" alt="Blue and green community lifestyle polo exploration">
-          </div>
-          <figcaption class="visual-caption">
-            <span>03</span>
-            <div><h3>Fresh colour option</h3><p>Blue and green give the community scene a calmer feel.</p></div>
-          </figcaption>
-        </figure>
+      <div class="option-block">
+        <div class="control-label"><span>Select Option</span><strong id="activeOptionLabel">Option 1 · Red + White</strong></div>
+        <div class="option-buttons" id="optionButtons"></div>
       </div>
+
+      <div class="variation-header" aria-live="polite">
+        <p class="variation-code" id="variationCode">Option 1A</p>
+        <h3 class="variation-title" id="variationTitle">Clear Wordmark</h3>
+        <p class="variation-position" id="variationPosition">Variation 1 of 4</p>
+      </div>
+
+      <nav class="variation-nav" aria-label="Variation navigation">
+        <button type="button" data-slide-prev>← Previous</button>
+        <span id="topSlideCount">1 / 4</span>
+        <button type="button" data-slide-next>Next →</button>
+      </nav>
+
+      <div class="carousel" id="variationCarousel" tabindex="0" aria-label="Swipe through complete variations">
+        <div class="carousel-track" id="carouselTrack"></div>
+      </div>
+      <p class="swipe-hint">Swipe left or right to view another back variation.</p>
+
+      <nav class="variation-nav bottom-nav" aria-label="Variation navigation">
+        <button type="button" data-slide-prev>← Previous</button>
+        <span id="bottomSlideCount">1 / 4</span>
+        <button type="button" data-slide-next>Next →</button>
+      </nav>
+
+      <a class="section-action" href="#concept-two">Continue to Concept 02 <span>↓</span></a>
     </section>
 
-    <section class="comparison">
-      <div class="topline"><span>06</span><span>Design Comparison</span></div>
+    <section class="concept-viewer" id="concept-two">
+      <div class="topline"><span>05</span><span>Concept 02</span></div>
+      <div class="concept-heading">
+        <span class="kicker">Community Lifestyle</span>
+        <h2>Everyday moments. Community spirit.</h2>
+        <p>A complete blue and green option with community scenes along the lower front and back.</p>
+      </div>
+
+      <div class="concept-two-label">
+        <strong>Option 1A · Blue + Green</strong>
+        <p>Front and back are presented at the same size.</p>
+      </div>
+      <div class="concept-two-showcase">
+        <figure class="garment-view">
+          <img src="assets/normalized/hem-front.png" alt="Concept 2 front view">
+          <figcaption>Front</figcaption>
+        </figure>
+        <figure class="garment-view">
+          <img src="assets/normalized/hem-back.png" alt="Concept 2 back view">
+          <figcaption>Back</figcaption>
+        </figure>
+      </div>
+      <a class="section-action" href="#comparison">Compare the Concepts <span>↓</span></a>
+    </section>
+
+    <section class="comparison" id="comparison">
+      <div class="topline"><span>06</span><span>Concept Comparison</span></div>
       <div class="intro">
         <span class="kicker">For committee discussion</span>
         <h2>Two different expressions.</h2>
-        <p>Each direction offers a distinct way to represent Centraville.</p>
+        <p>Both concepts are presented equally for discussion.</p>
       </div>
-
       <div class="compare-list">
-        <article class="compare-column">
-          <small>Direction 01</small>
+        <article class="compare-item">
+          <small>Concept 01</small>
           <h3>Neighbourhood Identity</h3>
           <ul>
             <li>Strong place recognition</li>
-            <li>Bold visual identity</li>
-            <li>Landmark focused</li>
+            <li>Four garment colour options</li>
+            <li>Four prepared back variations per option</li>
           </ul>
         </article>
-        <article class="compare-column">
-          <small>Direction 02</small>
+        <article class="compare-item">
+          <small>Concept 02</small>
           <h3>Community Lifestyle</h3>
           <ul>
-            <li>Warm community feeling</li>
-            <li>People focused</li>
-            <li>Lifestyle expression</li>
+            <li>Warm everyday community feeling</li>
+            <li>Quiet front and back hem placement</li>
+            <li>One complete blue and green option</li>
           </ul>
         </article>
       </div>
-
-      <p class="comparison-note">Both directions are presented equally for discussion with the committee.</p>
+      <p class="comparison-note">Both directions remain open for committee discussion.</p>
     </section>
 
-    <section class="closing">
+    <section class="closing" id="closing">
       <small>Thank you</small>
       <h2>Together,<span>We Represent</span>Centraville.</h2>
       <p>For discussion with the<br>Teck Ghee Centraville RN Committee</p>
     </section>
   </main>
 
-  <div class="toolbar"><button type="button" onclick="window.print()">Save PDF</button></div>
+  <div class="print-catalog" id="printCatalog"></div>
 
   <script>
+    const assetRoot = 'assets/normalized/';
+    const optionData = [
+      {
+        number: 1,
+        label: 'Red + White',
+        detail: 'Red collar, white sleeves',
+        swatch: 'red-white',
+        front: 'red-white-front.png',
+        backs: ['wordmark-red-white.png', 'line-red-white.png', 'colour-a-red-white.png', 'colour-b-red-white.png']
+      },
+      {
+        number: 2,
+        label: 'Full Red',
+        detail: 'Red collar, red sleeves',
+        swatch: 'red-red',
+        front: 'red-red-front.png',
+        backs: ['wordmark-red-red.png', 'line-red-red.png', 'colour-a-red-red.png', 'colour-b-red-red.png']
+      },
+      {
+        number: 3,
+        label: 'Red + Orange',
+        detail: 'Red sleeves, orange trim',
+        swatch: 'red-orange',
+        front: 'red-orange-front.png',
+        backs: ['wordmark-red-orange.png', 'line-red-orange.png', 'colour-a-red-orange.png', 'colour-b-red-orange.png']
+      },
+      {
+        number: 4,
+        label: 'Blue + Green',
+        detail: 'Blue sleeves, green trim',
+        swatch: 'blue-green',
+        front: 'blue-green-front.png',
+        backs: ['wordmark-blue-green.png', 'line-blue-green.png', 'colour-a-blue-green.png', 'colour-b-blue-green.png']
+      }
+    ];
+    const variationData = [
+      { letter: 'A', title: 'Clear Wordmark' },
+      { letter: 'B', title: 'Architectural Line' },
+      { letter: 'C', title: 'Colour Landmarks' },
+      { letter: 'D', title: 'Community Crest' }
+    ];
+
+    const optionButtons = document.getElementById('optionButtons');
+    const activeOptionLabel = document.getElementById('activeOptionLabel');
+    const variationCode = document.getElementById('variationCode');
+    const variationTitle = document.getElementById('variationTitle');
+    const variationPosition = document.getElementById('variationPosition');
+    const topSlideCount = document.getElementById('topSlideCount');
+    const bottomSlideCount = document.getElementById('bottomSlideCount');
+    const variationCarousel = document.getElementById('variationCarousel');
+    const carouselTrack = document.getElementById('carouselTrack');
+    const previousButtons = [...document.querySelectorAll('[data-slide-prev]')];
+    const nextButtons = [...document.querySelectorAll('[data-slide-next]')];
+
+    let activeOption = 0;
+    let activeVariation = 0;
+    let scrollTimer;
+
+    const pathFor = file => `${assetRoot}${file}`;
+
+    function buildOptionButtons() {
+      optionButtons.innerHTML = optionData.map((option, index) => `
+        <button class="option-button" type="button" data-option="${index}" aria-pressed="${index === activeOption}">
+          <span class="swatch ${option.swatch}"></span>
+          <span>Option ${option.number}<br><small>${option.label}</small></span>
+        </button>
+      `).join('');
+    }
+
+    function buildSlides() {
+      const option = optionData[activeOption];
+      carouselTrack.innerHTML = variationData.map((variation, index) => `
+        <article class="variation-slide" aria-label="Option ${option.number}${variation.letter}">
+          <figure class="garment-view">
+            <img src="${pathFor(option.front)}" alt="Option ${option.number}${variation.letter} front view">
+            <figcaption>Front · Option ${option.number}</figcaption>
+          </figure>
+          <figure class="garment-view">
+            <img src="${pathFor(option.backs[index])}" alt="Option ${option.number}${variation.letter} back view">
+            <figcaption>Back · Variation ${variation.letter}</figcaption>
+          </figure>
+        </article>
+      `).join('');
+      variationCarousel.scrollLeft = 0;
+    }
+
+    function updateStatus() {
+      const option = optionData[activeOption];
+      const variation = variationData[activeVariation];
+      activeOptionLabel.textContent = `Option ${option.number} · ${option.label}`;
+      variationCode.textContent = `Option ${option.number}${variation.letter}`;
+      variationTitle.textContent = variation.title;
+      variationPosition.textContent = `Variation ${activeVariation + 1} of ${variationData.length}`;
+      topSlideCount.textContent = `${activeVariation + 1} / ${variationData.length}`;
+      bottomSlideCount.textContent = `${activeVariation + 1} / ${variationData.length}`;
+      previousButtons.forEach(button => button.disabled = activeVariation === 0);
+      nextButtons.forEach(button => button.disabled = activeVariation === variationData.length - 1);
+      [...optionButtons.children].forEach((button, index) => button.setAttribute('aria-pressed', String(index === activeOption)));
+    }
+
+    function selectOption(index) {
+      activeOption = index;
+      activeVariation = 0;
+      buildOptionButtons();
+      buildSlides();
+      updateStatus();
+    }
+
+    function goToVariation(index) {
+      activeVariation = Math.max(0, Math.min(variationData.length - 1, index));
+      variationCarousel.scrollTo({ left: variationCarousel.clientWidth * activeVariation, behavior: 'smooth' });
+      updateStatus();
+    }
+
+    optionButtons.addEventListener('click', event => {
+      const button = event.target.closest('[data-option]');
+      if (!button) return;
+      selectOption(Number(button.dataset.option));
+    });
+    previousButtons.forEach(button => button.addEventListener('click', () => goToVariation(activeVariation - 1)));
+    nextButtons.forEach(button => button.addEventListener('click', () => goToVariation(activeVariation + 1)));
+
+    variationCarousel.addEventListener('scroll', () => {
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(() => {
+        const nextIndex = Math.round(variationCarousel.scrollLeft / variationCarousel.clientWidth);
+        if (nextIndex !== activeVariation) {
+          activeVariation = Math.max(0, Math.min(variationData.length - 1, nextIndex));
+          updateStatus();
+        }
+      }, 80);
+    }, { passive: true });
+
+    variationCarousel.addEventListener('keydown', event => {
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        goToVariation(activeVariation - 1);
+      }
+      if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        goToVariation(activeVariation + 1);
+      }
+    });
+
     const progressBar = document.getElementById('progressBar');
-    const updateProgress = () => {
+    function updateProgress() {
       const height = document.documentElement.scrollHeight - innerHeight;
       progressBar.style.width = `${height > 0 ? (scrollY / height) * 100 : 0}%`;
-    };
+    }
     addEventListener('scroll', updateProgress, { passive: true });
-    addEventListener('resize', updateProgress);
+    addEventListener('resize', () => {
+      variationCarousel.scrollLeft = variationCarousel.clientWidth * activeVariation;
+      updateProgress();
+    });
+
+    function buildPrintCatalog() {
+      const pages = optionData.flatMap(option => variationData.map((variation, index) => `
+        <article class="print-page">
+          <span class="kicker">Concept 01 · Option ${option.number}${variation.letter}</span>
+          <h2>${variation.title}</h2>
+          <p>${option.label} — ${option.detail}</p>
+          <figure class="print-pair">
+            <img src="${pathFor(option.front)}" alt="">
+            <img src="${pathFor(option.backs[index])}" alt="">
+            <figcaption>Front · Back</figcaption>
+          </figure>
+        </article>
+      `));
+      pages.push(`
+        <article class="print-page">
+          <span class="kicker">Concept 02 · Option 1A</span>
+          <h2>Community Lifestyle</h2>
+          <p>Blue + Green — community scenes along the front and back hem.</p>
+          <figure class="print-pair">
+            <img src="${pathFor('hem-front.png')}" alt="">
+            <img src="${pathFor('hem-back.png')}" alt="">
+            <figcaption>Front · Back</figcaption>
+          </figure>
+        </article>
+      `);
+      document.getElementById('printCatalog').innerHTML = pages.join('');
+    }
+
+    buildOptionButtons();
+    buildSlides();
+    updateStatus();
+    buildPrintCatalog();
     updateProgress();
   </script>
 </body>
