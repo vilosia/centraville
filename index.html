@@ -3,18 +3,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#c91f28">
+  <meta name="theme-color" content="#f6f1e8">
   <link rel="icon" href="data:,">
-  <title>Centraville Volunteer Polo — Design Proposal</title>
+  <title>Centraville Volunteer Polo — Committee Proposal</title>
   <style>
     :root {
-      --paper: #f4f1ea;
-      --white: #fff;
-      --ink: #181816;
-      --muted: #77736c;
-      --line: #d9d4ca;
-      --red: #c91f28;
-      --dark: #121211;
+      --paper: #faf8f3;
+      --warm: #f2ede3;
+      --sand: #e8dfd1;
+      --ink: #25231f;
+      --muted: #6f6b63;
+      --line: #d8d0c4;
+      --red: #ca2029;
+      --blue: #274a7d;
+      --green: #93b88b;
       --safe-top: max(18px, env(safe-area-inset-top));
       --safe-bottom: max(18px, env(safe-area-inset-bottom));
     }
@@ -24,23 +26,29 @@
     body {
       margin: 0;
       color: var(--ink);
-      background: #d9d5cd;
+      background: #ded8ce;
       font-family: Arial, Helvetica, sans-serif;
       -webkit-font-smoothing: antialiased;
     }
     img { display: block; width: 100%; }
     h1, h2, h3, p, figure, ul { margin: 0; }
     button { font: inherit; }
-    em { color: var(--red); font-family: Georgia, "Times New Roman", serif; font-style: normal; }
+
+    .proposal {
+      width: min(100%, 580px);
+      margin: 0 auto;
+      background: var(--paper);
+      box-shadow: 0 0 44px rgb(59 49 37 / .08);
+    }
 
     .progress {
       position: fixed;
-      z-index: 99;
+      z-index: 50;
       top: 0;
       left: 0;
       width: 100%;
       height: 3px;
-      background: rgb(255 255 255 / .25);
+      background: rgb(202 32 41 / .08);
     }
     .progress i {
       display: block;
@@ -49,611 +57,579 @@
       background: var(--red);
     }
 
-    .proposal {
-      width: min(100%, 560px);
-      margin: 0 auto;
-      background: var(--paper);
-      box-shadow: 0 0 50px rgb(0 0 0 / .08);
-    }
-
     section {
       position: relative;
       min-height: 100svh;
-      padding: calc(var(--safe-top) + 16px) 22px calc(var(--safe-bottom) + 44px);
+      padding: calc(var(--safe-top) + 20px) 24px calc(var(--safe-bottom) + 46px);
       overflow: hidden;
       border-bottom: 1px solid var(--line);
     }
+    section:nth-of-type(odd) { background: var(--paper); }
+    section:nth-of-type(even) { background: var(--warm); }
 
-    .label {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      color: inherit;
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-    }
-    .label span {
-      display: grid;
-      place-items: center;
-      width: 27px;
-      height: 27px;
-      border: 1px solid currentColor;
-      border-radius: 50%;
-      letter-spacing: 0;
-    }
-
-    .masthead {
+    .topline {
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
-    }
-    .brand { display: flex; flex-direction: column; line-height: 1; }
-    .brand small { font-size: 7px; font-weight: 800; letter-spacing: .25em; }
-    .brand strong { margin-top: 4px; color: var(--red); font-size: 17px; letter-spacing: -.04em; }
-    .brand i { margin-top: 4px; font-size: 6px; font-style: normal; font-weight: 800; letter-spacing: .2em; }
-    .masthead > span { color: var(--muted); font-size: 8px; letter-spacing: .12em; text-transform: uppercase; }
-
-    .cover {
-      display: flex;
-      flex-direction: column;
-      min-height: 100svh;
-      padding-bottom: 0;
-      background: var(--paper);
-    }
-    .cover-copy { position: relative; z-index: 2; margin-top: 14vh; }
-    .eyebrow {
-      margin-bottom: 12px;
-      color: var(--red);
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: .16em;
-      text-transform: uppercase;
-    }
-    h1 {
-      width: 100%;
-      max-width: 440px;
-      font-size: clamp(43px, 13.5vw, 68px);
-      font-weight: 600;
-      line-height: .9;
-      letter-spacing: -.06em;
-      overflow-wrap: anywhere;
-    }
-    .cover-copy > p:last-child {
-      margin-top: 18px;
-      color: var(--muted);
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 16px;
-      font-style: italic;
-    }
-    .cover-art {
-      position: relative;
-      z-index: 1;
-      width: calc(100% + 44px);
-      margin: auto -22px 34px;
-    }
-    .cover-art::before {
-      content: none;
-    }
-    .cover-foot {
-      display: flex;
-      justify-content: space-between;
-      padding-bottom: var(--safe-bottom);
-      color: var(--muted);
-      font-size: 8px;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-    }
-
-    h2 {
-      font-size: clamp(44px, 14vw, 72px);
-      font-weight: 500;
-      line-height: .92;
-      letter-spacing: -.065em;
-    }
-    .objective h2 { margin-top: 16vh; }
-    .objective > p {
-      margin-top: 32px;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 21px;
-      line-height: 1.35;
-    }
-    .principles { margin-top: 55px; border-top: 1px solid var(--ink); }
-    .principle {
-      display: grid;
-      grid-template-columns: 28px 92px 1fr;
-      gap: 9px;
-      padding: 17px 0;
-      border-bottom: 1px solid var(--line);
-      font-size: 10px;
-      line-height: 1.5;
-    }
-    .principle > span { color: var(--red); }
-    .principle strong { text-transform: uppercase; letter-spacing: .04em; }
-    .principle p { color: var(--muted); }
-
-    .concept { background: var(--paper); }
-    .concept h2 { margin-top: 70px; font-size: clamp(40px, 12vw, 64px); }
-    .concept-art {
-      width: calc(100% + 44px);
-      margin: 55px -22px 0;
-      padding: 32px 0 20px;
-      background: transparent;
-    }
-    .concept-art img { transform: scale(1.22); }
-    .concept-copy { margin-top: 34px; }
-    .concept-copy > p { font-size: 14px; line-height: 1.65; }
-    .concept-copy ul { padding: 24px 0 0; list-style: none; }
-    .concept-copy li {
-      display: grid;
-      grid-template-columns: 90px 1fr;
-      padding: 12px 0;
-      border-top: 1px solid var(--line);
-      color: var(--muted);
-      font-size: 10px;
-      line-height: 1.5;
-    }
-    .concept-copy strong { color: var(--ink); text-transform: uppercase; letter-spacing: .04em; }
-
-    .evolution { background: var(--dark); color: var(--white); }
-    .evolution h2 { margin-top: 70px; }
-    .evolution > p {
-      margin-top: 18px;
-      max-width: 310px;
-      color: #a6a39e;
-      font-size: 12px;
-      line-height: 1.6;
-    }
-    .steps { margin-top: 45px; }
-    .step { position: relative; }
-    .step + .step { margin-top: 44px; }
-    .step-number {
-      position: absolute;
-      z-index: 2;
-      top: 10px;
-      left: 10px;
-      display: grid;
-      place-items: center;
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: var(--red);
-      font-size: 9px;
-    }
-    .frame {
-      aspect-ratio: 4 / 3;
-      overflow: hidden;
-      background: transparent;
-    }
-    .frame img { height: 100%; object-fit: contain; }
-    .frame.illustration img { transform: scale(1.55); }
-    .frame.line img { transform: scale(1.5); }
-    .frame.polo img { transform: scale(1.08); }
-    .step h3 { margin-top: 14px; font-size: 14px; letter-spacing: .04em; text-transform: uppercase; }
-    .step p { margin-top: 6px; color: #a6a39e; font-size: 10px; line-height: 1.55; }
-    .arrow { padding: 16px 0; color: var(--red); text-align: center; font-size: 28px; }
-
-    .details h2 { margin-top: 70px; }
-    .detail-list { margin-top: 52px; border-top: 1px solid var(--ink); }
-    .detail {
-      display: grid;
-      grid-template-columns: 1fr 1.2fr;
       gap: 20px;
-      padding: 26px 0;
-      border-bottom: 1px solid var(--line);
-      min-height: 165px;
-    }
-    .detail-visual { align-self: stretch; overflow: hidden; }
-    .type-sample {
-      color: var(--red);
-      font-size: 34px;
-      font-weight: 800;
-      line-height: .8;
-      letter-spacing: -.07em;
-    }
-    .swatches { display: flex; gap: 6px; }
-    .swatches i { width: 42px; height: 42px; border: 1px solid var(--line); border-radius: 50%; }
-    .swatches i:nth-child(1) { background: var(--red); }
-    .swatches i:nth-child(2) { background: var(--white); }
-    .swatches i:nth-child(3) { background: var(--ink); }
-    .line-sample img { width: 250%; transform: translate(-8%, 25%); }
-    .layout-sample {
-      display: grid;
-      place-items: center;
-      align-content: center;
-      border: 1px solid var(--line);
-      color: var(--red);
-      font-size: 13px;
-      font-weight: 800;
-    }
-    .detail-copy { align-self: end; }
-    .detail-copy span, .close-copy span, .alt-copy span {
-      color: var(--red);
-      font-size: 8px;
+      color: var(--muted);
+      font-size: 9px;
       font-weight: 700;
       letter-spacing: .12em;
       text-transform: uppercase;
     }
-    .detail-copy h3, .close-copy h3, .alt-copy h3 { margin: 8px 0 6px; font-size: 15px; }
-    .detail-copy p, .close-copy p, .alt-copy p { color: var(--muted); font-size: 10px; line-height: 1.55; }
+    .topline span:first-child { color: var(--red); }
 
-    .final { background: var(--red); color: var(--white); }
-    .final h2 { margin-top: 70px; }
-    .final em { color: var(--white); }
-    .polo-grid {
-      display: grid;
-      gap: 14px;
-      margin-top: 48px;
+    h1, h2 {
+      font-weight: 500;
+      line-height: .94;
+      letter-spacing: -.055em;
     }
-    .polo-panel {
-      overflow: hidden;
-      background: transparent;
+    h1 { font-size: clamp(48px, 14vw, 76px); }
+    h2 { font-size: clamp(42px, 12vw, 68px); }
+    h3 { font-size: 18px; line-height: 1.15; }
+
+    .intro {
+      margin-top: 64px;
+      max-width: 460px;
     }
-    .polo-half {
-      position: relative;
-      aspect-ratio: 1;
-      overflow: hidden;
+    .intro p {
+      margin-top: 18px;
+      color: var(--muted);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 20px;
+      line-height: 1.42;
     }
-    .polo-half img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 200%;
-      max-width: none;
-      height: auto;
-    }
-    .polo-half.back img { transform: translateX(-50%); }
-    .polo-panel figcaption {
-      display: flex;
-      justify-content: space-between;
-      padding: 13px 14px 14px;
-      border-top: 1px solid rgb(255 255 255 / .28);
-      color: rgb(255 255 255 / .72);
-      font-size: 7px;
-      letter-spacing: .08em;
+    .kicker {
+      display: block;
+      margin-bottom: 12px;
+      color: var(--red);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .15em;
       text-transform: uppercase;
     }
 
-    .closeups { background: var(--paper); }
-    .closeups h2 { margin-top: 65px; font-size: 44px; }
-    .close-list { margin-top: 40px; }
-    .close-card + .close-card { margin-top: 42px; }
-    .crop {
-      position: relative;
-      aspect-ratio: 1;
-      overflow: hidden;
-      background: transparent;
+    .cover {
+      display: flex;
+      flex-direction: column;
+      background: var(--warm) !important;
     }
-    .frame.polo { background: transparent; }
-    .crop img {
+    .brand {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+    }
+    .brand small {
+      font-size: 7px;
+      font-weight: 800;
+      letter-spacing: .24em;
+    }
+    .brand strong {
+      margin-top: 4px;
+      color: var(--red);
+      font-size: 17px;
+      letter-spacing: -.04em;
+    }
+    .brand i {
+      margin-top: 4px;
+      font-size: 6px;
+      font-style: normal;
+      font-weight: 800;
+      letter-spacing: .18em;
+    }
+    .cover-copy {
+      position: relative;
+      z-index: 2;
+      margin-top: 11vh;
+    }
+    .cover-copy p {
+      margin-top: 17px;
+      color: var(--muted);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 17px;
+      font-style: italic;
+    }
+    .cover-polo {
+      position: relative;
+      width: calc(100% + 48px);
+      margin: auto -24px 0;
+      aspect-ratio: 1.13;
+      overflow: hidden;
+    }
+    .cover-polo img {
       position: absolute;
       top: 0;
       left: 0;
       width: 200%;
       max-width: none;
-      height: auto;
     }
-    .crop.back img { transform: translateX(-50%); }
-    .crop.trim { aspect-ratio: 4 / 3; }
-    .crop.trim img {
-      width: 235%;
-      transform: translate(-5%, -3%);
+    .cover-note {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 12px;
+      color: var(--muted);
+      font-size: 8px;
+      letter-spacing: .11em;
+      text-transform: uppercase;
     }
-    .close-copy { margin-top: 14px; }
 
-    .alternatives h2 { margin-top: 70px; }
-    .alternatives > p { margin-top: 18px; color: var(--muted); font-size: 12px; line-height: 1.6; }
-    .alt-list { margin-top: 42px; }
-    .alt-card {
-      background: transparent;
+    .objective {
+      display: flex;
+      flex-direction: column;
+    }
+    .objective .intro { margin-top: 18vh; }
+    .objective-statement {
+      margin-top: auto;
+      padding-top: 44px;
+      border-top: 1px solid var(--ink);
+      font-size: clamp(26px, 7vw, 38px);
+      line-height: 1.18;
+      letter-spacing: -.025em;
+    }
+    .objective-statement strong { color: var(--red); font-weight: 500; }
+
+    .concepts .intro p { max-width: 360px; }
+    .direction-list { margin-top: 54px; }
+    .direction-card {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 16px;
+      padding: 26px 0;
       border-top: 1px solid var(--line);
     }
-    .alt-card + .alt-card { margin-top: 18px; }
-    .alt-art {
+    .direction-card:last-child { border-bottom: 1px solid var(--line); }
+    .direction-number {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      border: 1px solid currentColor;
+      border-radius: 50%;
+      color: var(--red);
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .direction-card:nth-child(2) .direction-number { color: var(--blue); }
+    .direction-card p {
+      margin-top: 8px;
+      color: var(--muted);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      line-height: 1.4;
+    }
+
+    .exploration-section { min-height: auto; }
+    .exploration-section .intro { margin-top: 56px; }
+    .exploration-list { margin-top: 50px; }
+    .exploration + .exploration {
+      margin-top: 54px;
+      padding-top: 34px;
+      border-top: 1px solid var(--line);
+    }
+    .visual {
       position: relative;
-      aspect-ratio: 3 / 2;
+      width: calc(100% + 48px);
+      margin-left: -24px;
       overflow: hidden;
       background: transparent;
     }
-    .alt-art img {
+    .back-view {
+      aspect-ratio: 1.02;
+    }
+    .back-view img {
       position: absolute;
       top: 0;
       left: 0;
       width: 200%;
       max-width: none;
-      height: auto;
       transform: translateX(-50%);
     }
-    .alt-copy { padding: 18px; }
-    .recommend {
-      margin-top: 40px;
-      padding-top: 18px;
-      border-top: 1px solid var(--ink);
+    .full-polo {
+      aspect-ratio: 2.03;
     }
-    .recommend span { color: var(--red); font-size: 8px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
-    .recommend p { margin-top: 14px; font-family: Georgia, "Times New Roman", serif; font-size: 20px; line-height: 1.35; }
+    .panorama {
+      aspect-ratio: 3.1;
+      display: flex;
+      align-items: center;
+    }
+    .visual-caption {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .visual-caption span {
+      color: var(--red);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .1em;
+    }
+    .direction-two .visual-caption span { color: var(--blue); }
+    .visual-caption h3 { font-size: 17px; }
+    .visual-caption p {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .comparison {
+      display: flex;
+      min-height: 100svh;
+      flex-direction: column;
+    }
+    .comparison .intro { margin-top: 60px; }
+    .compare-list { margin-top: 48px; }
+    .compare-column {
+      padding: 26px 0;
+      border-top: 1px solid var(--line);
+    }
+    .compare-column:last-child { border-bottom: 1px solid var(--line); }
+    .compare-column small {
+      color: var(--red);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .compare-column:nth-child(2) small { color: var(--blue); }
+    .compare-column h3 { margin-top: 8px; font-size: 23px; }
+    .compare-column ul {
+      margin-top: 18px;
+      padding: 0;
+      list-style: none;
+    }
+    .compare-column li {
+      padding: 9px 0;
+      color: var(--muted);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      border-top: 1px solid rgb(216 208 196 / .6);
+    }
+    .comparison-note {
+      margin-top: auto;
+      padding-top: 38px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
 
     .closing {
       display: flex;
       min-height: 100svh;
       flex-direction: column;
       justify-content: center;
-      background: var(--paper);
-      color: var(--ink);
+      text-align: center;
+      background: var(--warm) !important;
     }
-    .closing::before {
-      content: "C";
-      position: absolute;
-      top: 8%;
-      right: -16%;
+    .closing small {
       color: var(--red);
-      font-size: 360px;
-      font-weight: 800;
-      line-height: 1;
-      opacity: .08;
-    }
-    .closing-copy { position: relative; z-index: 2; }
-    .closing-copy > p { margin-bottom: 12px; font-family: Georgia, "Times New Roman", serif; font-size: 20px; font-style: italic; }
-    .closing h2 {
-      width: 100%;
-      font-size: clamp(43px, 13.5vw, 66px);
-      line-height: .92;
-      overflow-wrap: anywhere;
-    }
-    .closing-art {
-      position: relative;
-      z-index: 2;
-      width: calc(100% + 44px);
-      margin: 70px -22px 0;
-    }
-    .closing footer {
-      position: absolute;
-      right: 22px;
-      bottom: var(--safe-bottom);
-      left: 22px;
-      color: var(--muted);
-      font-size: 7px;
-      letter-spacing: .1em;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .15em;
       text-transform: uppercase;
+    }
+    .closing h2 {
+      margin-top: 24px;
+      font-size: clamp(52px, 15vw, 82px);
+    }
+    .closing h2 span {
+      display: block;
+      color: var(--red);
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 400;
+    }
+    .closing p {
+      margin-top: 30px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
     }
 
     .toolbar {
       position: fixed;
-      z-index: 90;
+      z-index: 60;
       right: 14px;
       bottom: max(14px, env(safe-area-inset-bottom));
     }
     .toolbar button {
-      min-height: 42px;
-      padding: 0 16px;
-      color: var(--white);
       border: 0;
-      border-radius: 99px;
-      background: var(--dark);
-      box-shadow: 0 8px 25px rgb(0 0 0 / .2);
+      border-radius: 999px;
+      padding: 11px 15px;
+      color: #fff;
+      background: var(--red);
+      box-shadow: 0 8px 22px rgb(106 22 27 / .2);
       font-size: 10px;
       font-weight: 700;
-      letter-spacing: .06em;
+      letter-spacing: .08em;
       text-transform: uppercase;
       cursor: pointer;
     }
 
     @media (min-width: 700px) {
       body { padding: 30px 0; }
-      .proposal { border-radius: 4px; overflow: hidden; }
-      .toolbar { right: calc(50% - 330px); }
+      .proposal { overflow: hidden; border-radius: 5px; }
+      section { padding-left: 38px; padding-right: 38px; }
+      .cover-polo, .visual {
+        width: calc(100% + 76px);
+        margin-left: -38px;
+      }
+      .toolbar { right: calc(50% - 340px); }
     }
 
     @media print {
       @page { size: A4 portrait; margin: 0; }
-      html, body { background: white; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      html, body {
+        background: #fff;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
       body { padding: 0; }
       .proposal { width: 100%; max-width: none; box-shadow: none; }
       section {
         width: 210mm;
         height: 297mm;
         min-height: 297mm;
-        padding: 15mm 13mm;
+        padding: 14mm 13mm;
         page-break-after: always;
         break-after: page;
       }
       .progress, .toolbar { display: none; }
-      .cover { padding-bottom: 0; }
-      .cover-copy { margin-top: 35mm; }
-      h1 { font-size: 28mm; }
-      h2 { font-size: 22mm; }
-      .cover-art { margin-top: auto; }
-      .concept-art { margin-top: 22mm; }
-      .evolution h2, .details h2, .final h2, .alternatives h2 { margin-top: 20mm; }
-      .steps { display: grid; grid-template-columns: 1fr 12mm 1fr 12mm 1fr; align-items: center; }
-      .step + .step { margin-top: 0; }
-      .arrow { padding: 0; }
-      .frame { aspect-ratio: 4 / 4.2; }
-      .detail-list { display: grid; grid-template-columns: 1fr 1fr; }
-      .detail { padding: 8mm 5mm; }
-      .polo-grid { grid-template-columns: 1fr 1fr; margin-top: 18mm; }
-      .close-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5mm; }
-      .close-card + .close-card { margin-top: 0; }
-      .crop { height: auto; }
-      .alt-list { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; }
-      .alt-card + .alt-card { margin-top: 0; }
-      .closing h2 { font-size: 25mm; }
+      h1 { font-size: 25mm; }
+      h2 { font-size: 20mm; }
+      .cover-copy { margin-top: 25mm; }
+      .cover-polo { width: calc(100% + 26mm); margin-left: -13mm; }
+      .objective .intro { margin-top: 35mm; }
+      .direction-list { margin-top: 22mm; }
+      .exploration-section { height: 297mm; }
+      .exploration-list {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6mm;
+        margin-top: 14mm;
+      }
+      .exploration + .exploration {
+        margin-top: 0;
+        padding-top: 0;
+        border-top: 0;
+      }
+      .visual {
+        width: 100%;
+        margin-left: 0;
+      }
+      .back-view { aspect-ratio: 1; }
+      .direction-two .exploration-list { grid-template-columns: repeat(3, 1fr); }
+      .visual-caption { grid-template-columns: 1fr; }
+      .visual-caption span { display: none; }
+      .compare-list {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12mm;
+        margin-top: 24mm;
+      }
+      .compare-column:last-child { border-bottom: 0; }
+      .closing h2 { font-size: 27mm; }
     }
   </style>
 </head>
 <body>
   <div class="progress" aria-hidden="true"><i id="progressBar"></i></div>
+
   <main class="proposal">
     <section class="cover">
-      <header class="masthead">
+      <header class="topline">
         <div class="brand">
           <small>TECK GHEE</small>
           <strong>CENTRAVILLE</strong>
           <i>RESIDENTS’ NETWORK</i>
         </div>
-        <span>Design proposal · 2026</span>
+        <span>Committee Proposal</span>
       </header>
+
       <div class="cover-copy">
-        <p class="eyebrow">Volunteer identity</p>
-        <h1>Volunteer Polo<br><em>Design Proposal</em></h1>
-        <p>A familiar neighbourhood, worn with pride.</p>
+        <span class="kicker">Volunteer Polo</span>
+        <h1>Design<br>Proposal</h1>
+        <p>A shared look for the people who serve our community.</p>
       </div>
-      <figure class="cover-art">
-        <img src="assets/concept1.png" alt="Illustration of recognisable Centraville landmarks">
+
+      <figure class="cover-polo">
+        <img src="assets/concept1e.png" alt="Front view of the white Centraville volunteer polo">
       </figure>
-      <div class="cover-foot"><span>Prepared for the RN Committee</span><span>01 / 08</span></div>
+
+      <div class="cover-note">
+        <span>For discussion</span>
+        <span>July 2026</span>
+      </div>
     </section>
 
     <section class="objective">
-      <div class="label"><span>01</span>Design objective</div>
-      <h2>A polo that feels like <em>us.</em></h2>
-      <p>Refresh the volunteer polo into a clear, confident expression of Centraville—recognisable at a glance and welcoming up close.</p>
-      <div class="principles">
-        <div class="principle"><span>01</span><strong>Belonging</strong><p>Grounded in the places and people volunteers serve.</p></div>
-        <div class="principle"><span>02</span><strong>Visibility</strong><p>Easy to recognise during events and outreach.</p></div>
-        <div class="principle"><span>03</span><strong>Pride</strong><p>Professional enough to represent the network well.</p></div>
+      <div class="topline"><span>02</span><span>Design Objective</span></div>
+      <div class="intro">
+        <span class="kicker">One simple purpose</span>
+        <h2>Easy to recognise. Proud to wear.</h2>
+        <p>A volunteer polo that feels welcoming, distinctive and connected to Centraville.</p>
       </div>
+      <p class="objective-statement">Help residents quickly recognise the people who <strong>serve their community.</strong></p>
     </section>
 
-    <section class="concept">
-      <div class="label"><span>02</span>Design concept</div>
-      <h2>Our neighbourhood,<br><em>in one line.</em></h2>
-      <figure class="concept-art"><img src="assets/concept1.png" alt="Colour illustration of Centraville"></figure>
-      <div class="concept-copy">
-        <p>The illustration brings together everyday icons of Centraville: familiar buildings, shared spaces and the people who animate them.</p>
-        <ul>
-          <li><strong>Community</strong><span>A collective scene, never a single symbol.</span></li>
-          <li><strong>Identity</strong><span>Details residents recognise as their own.</span></li>
-          <li><strong>Recognition</strong><span>A distinctive anchor for every volunteer.</span></li>
-        </ul>
+    <section class="concepts">
+      <div class="topline"><span>03</span><span>Design Concepts</span></div>
+      <div class="intro">
+        <span class="kicker">Two possible directions</span>
+        <h2>Two ways to tell our story.</h2>
+        <p>Both directions celebrate Centraville from a different point of view.</p>
       </div>
-    </section>
 
-    <section class="evolution">
-      <div class="label"><span>03</span>Design evolution</div>
-      <h2>From place<br>to pattern.</h2>
-      <p>We simplify the neighbourhood without losing its character.</p>
-      <div class="steps">
-        <article class="step">
-          <span class="step-number">01</span>
-          <div class="frame illustration"><img src="assets/concept1.png" alt="Full-colour illustration"></div>
-          <h3>Illustration</h3><p>Capture the warmth and familiar landmarks of the neighbourhood.</p>
+      <div class="direction-list">
+        <article class="direction-card">
+          <span class="direction-number">01</span>
+          <div>
+            <h3>Neighbourhood Identity</h3>
+            <p>Recognisable places. Shared identity.</p>
+          </div>
         </article>
-        <div class="arrow" aria-hidden="true">↓</div>
-        <article class="step">
-          <span class="step-number">02</span>
-          <div class="frame line"><img src="assets/concept2.png" alt="Continuous line-art illustration"></div>
-          <h3>Line art</h3><p>Reduce the scene to a clean, scalable graphic language.</p>
-        </article>
-        <div class="arrow" aria-hidden="true">↓</div>
-        <article class="step">
-          <span class="step-number">03</span>
-          <div class="frame polo"><img src="assets/concept1e.png" alt="Final volunteer polo"></div>
-          <h3>Final polo</h3><p>Balance identity, contrast and everyday wearability.</p>
+        <article class="direction-card">
+          <span class="direction-number">02</span>
+          <div>
+            <h3>Community Lifestyle</h3>
+            <p>Everyday moments. Community spirit.</p>
+          </div>
         </article>
       </div>
     </section>
 
-    <section class="details">
-      <div class="label"><span>04</span>Design details</div>
-      <h2>Quiet details.<br><em>Clear identity.</em></h2>
-      <div class="detail-list">
-        <article class="detail">
-          <div class="detail-visual type-sample">CENTRA<br>VILLE</div>
-          <div class="detail-copy"><span>01 / Typography</span><h3>Confident and direct</h3><p>Bold uppercase lettering creates instant recognition.</p></div>
-        </article>
-        <article class="detail">
-          <div class="detail-visual swatches"><i></i><i></i><i></i></div>
-          <div class="detail-copy"><span>02 / Colour</span><h3>Warm and visible</h3><p>Centraville red leads; white keeps the design open.</p></div>
-        </article>
-        <article class="detail">
-          <div class="detail-visual line-sample"><img src="assets/concept2.png" alt=""></div>
-          <div class="detail-copy"><span>03 / Line art</span><h3>Local stories, simplified</h3><p>A consistent line connects multiple landmarks as one place.</p></div>
-        </article>
-        <article class="detail">
-          <div class="detail-visual layout-sample">CENTRAVILLE</div>
-          <div class="detail-copy"><span>04 / Layout</span><h3>Clear hierarchy</h3><p>Name first, neighbourhood second, network signature last.</p></div>
-        </article>
+    <section class="exploration-section direction-one">
+      <div class="topline"><span>04</span><span>Direction 1 Exploration</span></div>
+      <div class="intro">
+        <span class="kicker">Direction 01</span>
+        <h2>Neighbourhood Identity</h2>
+        <p>Familiar landmarks create a strong sense of place.</p>
       </div>
-    </section>
 
-    <section class="final">
-      <div class="label"><span>05</span>Final design</div>
-      <h2>The proposed<br><em>volunteer polo.</em></h2>
-      <div class="polo-grid">
-        <figure class="polo-panel">
-          <div class="polo-half front"><img src="assets/concept1e.png" alt="Front view of the proposed polo"></div>
-          <figcaption><span>Front</span><span>Volunteer mark</span></figcaption>
+      <div class="exploration-list">
+        <figure class="exploration">
+          <div class="visual back-view">
+            <img src="assets/concept1a.png" alt="Centraville polo exploration with a clean wordmark and line illustration">
+          </div>
+          <figcaption class="visual-caption">
+            <span>01</span>
+            <div><h3>Clear identity</h3><p>Bold name with a subtle neighbourhood scene.</p></div>
+          </figcaption>
         </figure>
-        <figure class="polo-panel">
-          <div class="polo-half back"><img src="assets/concept1e.png" alt="Back view of the proposed polo"></div>
-          <figcaption><span>Back</span><span>Neighbourhood identity</span></figcaption>
+
+        <figure class="exploration">
+          <div class="visual back-view">
+            <img src="assets/concept1b.png" alt="Centraville polo exploration with a neighbourhood crest">
+          </div>
+          <figcaption class="visual-caption">
+            <span>02</span>
+            <div><h3>Landmark crest</h3><p>Key places gathered into one recognisable emblem.</p></div>
+          </figcaption>
+        </figure>
+
+        <figure class="exploration">
+          <div class="visual back-view">
+            <img src="assets/concept1e.png" alt="Centraville polo exploration with colourful neighbourhood landmarks">
+          </div>
+          <figcaption class="visual-caption">
+            <span>03</span>
+            <div><h3>Colourful neighbourhood</h3><p>A warm illustration with strong visual character.</p></div>
+          </figcaption>
         </figure>
       </div>
     </section>
 
-    <section class="closeups">
-      <div class="label"><span>06</span>Close-up details</div>
-      <h2>Designed to be recognised.</h2>
-      <div class="close-list">
-        <article class="close-card">
-          <div class="crop chest"><img src="assets/concept1e.png" alt="Chest mark close-up"></div>
-          <div class="close-copy"><span>01</span><h3>Volunteer mark</h3><p>A discreet chest placement keeps the front clean and official.</p></div>
-        </article>
-        <article class="close-card">
-          <div class="crop back"><img src="assets/concept1e.png" alt="Back identity close-up"></div>
-          <div class="close-copy"><span>02</span><h3>Neighbourhood identity</h3><p>The name leads from a distance; landmarks reward a closer look.</p></div>
-        </article>
-        <article class="close-card">
-          <div class="crop trim"><img src="assets/concept1e.png" alt="Collar and sleeve trim close-up"></div>
-          <div class="close-copy"><span>03</span><h3>Recognition trim</h3><p>Red collar and sleeve bands create an event-ready silhouette.</p></div>
-        </article>
+    <section class="exploration-section direction-two">
+      <div class="topline"><span>05</span><span>Direction 2 Exploration</span></div>
+      <div class="intro">
+        <span class="kicker">Direction 02</span>
+        <h2>Community Lifestyle</h2>
+        <p>People and everyday moments bring the neighbourhood to life.</p>
+      </div>
+
+      <div class="exploration-list">
+        <figure class="exploration">
+          <div class="visual panorama">
+            <img src="assets/concept2.png" alt="Line illustration of Centraville community places and everyday activities">
+          </div>
+          <figcaption class="visual-caption">
+            <span>01</span>
+            <div><h3>Everyday Centraville</h3><p>A continuous scene of places, people and daily life.</p></div>
+          </figcaption>
+        </figure>
+
+        <figure class="exploration">
+          <div class="visual back-view">
+            <img src="assets/concept2a.png" alt="Red and white community lifestyle polo exploration">
+          </div>
+          <figcaption class="visual-caption">
+            <span>02</span>
+            <div><h3>Community line</h3><p>A light, friendly scene across the lower back.</p></div>
+          </figcaption>
+        </figure>
+
+        <figure class="exploration">
+          <div class="visual back-view">
+            <img src="assets/concept2b.png" alt="Blue and green community lifestyle polo exploration">
+          </div>
+          <figcaption class="visual-caption">
+            <span>03</span>
+            <div><h3>Fresh colour option</h3><p>Blue and green give the community scene a calmer feel.</p></div>
+          </figcaption>
+        </figure>
       </div>
     </section>
 
-    <section class="alternatives">
-      <div class="label"><span>07</span>Alternative exploration</div>
-      <h2>Explored with intent.</h2>
-      <p>Each direction tested a different balance of visibility, storytelling and everyday wearability.</p>
-      <div class="alt-list">
-        <article class="alt-card">
-          <div class="alt-art"><img src="assets/concept1b.png" alt="Architectural crest alternative"></div>
-          <div class="alt-copy"><span>Direction A</span><h3>Architectural crest</h3><p>Formal and structured, with the skyline framed as an official emblem.</p></div>
+    <section class="comparison">
+      <div class="topline"><span>06</span><span>Design Comparison</span></div>
+      <div class="intro">
+        <span class="kicker">For committee discussion</span>
+        <h2>Two different expressions.</h2>
+        <p>Each direction offers a distinct way to represent Centraville.</p>
+      </div>
+
+      <div class="compare-list">
+        <article class="compare-column">
+          <small>Direction 01</small>
+          <h3>Neighbourhood Identity</h3>
+          <ul>
+            <li>Strong place recognition</li>
+            <li>Bold visual identity</li>
+            <li>Landmark focused</li>
+          </ul>
         </article>
-        <article class="alt-card">
-          <div class="alt-art"><img src="assets/concept1c.png" alt="Layered wordmark alternative"></div>
-          <div class="alt-copy"><span>Direction B</span><h3>Layered wordmark</h3><p>A compact lock-up that places the illustration inside the name.</p></div>
-        </article>
-        <article class="alt-card">
-          <div class="alt-art"><img src="assets/concept2b.png" alt="Blue and green community line alternative"></div>
-          <div class="alt-copy"><span>Direction C</span><h3>Community line</h3><p>A calmer route centred on people, movement and everyday life.</p></div>
+        <article class="compare-column">
+          <small>Direction 02</small>
+          <h3>Community Lifestyle</h3>
+          <ul>
+            <li>Warm community feeling</li>
+            <li>People focused</li>
+            <li>Lifestyle expression</li>
+          </ul>
         </article>
       </div>
-      <div class="recommend"><span>Recommendation</span><p>Proceed with the red neighbourhood illustration direction for its recognition, warmth and connection to Centraville.</p></div>
+
+      <p class="comparison-note">Both directions are presented equally for discussion with the committee.</p>
     </section>
 
     <section class="closing">
-      <div class="closing-copy">
-        <p>Together,</p>
-        <h2>We Represent<br><em>Centraville.</em></h2>
-      </div>
-      <img class="closing-art" src="assets/concept1.png" alt="Centraville neighbourhood illustration">
-      <footer>Teck Ghee Centraville Residents’ Network · Volunteer Polo Design Proposal</footer>
+      <small>Thank you</small>
+      <h2>Together,<span>We Represent</span>Centraville.</h2>
+      <p>For discussion with the<br>Teck Ghee Centraville RN Committee</p>
     </section>
   </main>
 
-  <div class="toolbar"><button type="button" id="printButton">Save as PDF</button></div>
+  <div class="toolbar"><button type="button" onclick="window.print()">Save PDF</button></div>
 
   <script>
-    const bar = document.getElementById("progressBar");
+    const progressBar = document.getElementById('progressBar');
     const updateProgress = () => {
-      const max = document.documentElement.scrollHeight - innerHeight;
-      bar.style.width = `${max > 0 ? (scrollY / max) * 100 : 0}%`;
+      const height = document.documentElement.scrollHeight - innerHeight;
+      progressBar.style.width = `${height > 0 ? (scrollY / height) * 100 : 0}%`;
     };
-    addEventListener("scroll", updateProgress, { passive: true });
-    addEventListener("resize", updateProgress);
-    document.getElementById("printButton").addEventListener("click", () => print());
+    addEventListener('scroll', updateProgress, { passive: true });
+    addEventListener('resize', updateProgress);
     updateProgress();
   </script>
 </body>
