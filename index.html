@@ -345,15 +345,21 @@
       -webkit-overflow-scrolling: touch;
     }
     .carousel::-webkit-scrollbar { display: none; }
-    .carousel-track { display: flex; align-items: flex-start; }
+    .carousel-track { display: flex; align-items: stretch; }
     .variation-slide {
+      display: grid;
+      grid-template-rows: 1fr 1fr;
       flex: 0 0 100%;
+      height: clamp(500px, 78svh, 680px);
       min-width: 0;
       scroll-snap-align: start;
       scroll-snap-stop: always;
     }
     .garment-view {
-      padding: 28px 24px 34px;
+      display: grid;
+      grid-template-rows: minmax(0, 1fr) auto;
+      min-height: 0;
+      padding: 10px 18px 12px;
       background: var(--warm);
     }
     .garment-view + .garment-view {
@@ -361,11 +367,14 @@
     }
     .garment-view img {
       width: 100%;
-      max-width: 440px;
+      height: 100%;
+      min-height: 0;
+      max-width: none;
       margin: 0 auto;
+      object-fit: contain;
     }
     .garment-view figcaption {
-      margin-top: 12px;
+      margin-top: 4px;
       color: var(--muted);
       font-size: 9px;
       font-weight: 700;
@@ -382,7 +391,10 @@
     .bottom-nav { margin-top: 20px; }
 
     .concept-two-showcase {
+      display: grid;
+      grid-template-rows: 1fr 1fr;
       width: calc(100% + 48px);
+      height: clamp(500px, 78svh, 680px);
       margin: 42px -24px 0;
     }
     .concept-two-showcase .garment-view { background: var(--paper); }
