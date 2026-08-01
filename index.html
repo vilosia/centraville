@@ -136,7 +136,7 @@
       object-fit: contain;
       transform: translateY(3%);
     }
-    .cover-action, .section-action {
+    .cover-action {
       display: inline-flex;
       align-items: center;
       justify-content: space-between;
@@ -259,7 +259,6 @@
       letter-spacing: .1em;
       text-transform: uppercase;
     }
-    .control-label strong { color: var(--red); }
     .option-buttons {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -325,31 +324,21 @@
     .slide-controls button:first-child { text-align: left; }
     .slide-controls button:last-child { text-align: right; }
     .slide-controls button:disabled { opacity: .25; cursor: default; }
-    .slide-meta { text-align: center; }
-    .slide-meta strong,
-    .slide-meta span,
-    .slide-meta small { display: block; }
-    .slide-meta strong {
-      color: var(--red);
-      font-size: 10px;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-    }
-    .slide-meta span {
-      margin-top: 3px;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 15px;
-      line-height: 1.15;
-    }
-    .slide-meta small {
-      margin-top: 3px;
+    .slide-count {
       color: var(--muted);
-      font-size: 8px;
+      font-size: 9px;
       font-weight: 700;
       letter-spacing: .08em;
       text-transform: uppercase;
     }
-    .slide-controls.is-single { grid-template-columns: 1fr; }
+    .variation-name {
+      padding: 11px 18px 16px;
+      background: var(--warm);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 18px;
+      line-height: 1.2;
+      text-align: center;
+    }
 
     .carousel {
       width: calc(100% + 48px);
@@ -365,7 +354,7 @@
     .carousel-track { display: flex; align-items: stretch; }
     .variation-slide {
       display: grid;
-      grid-template-rows: 1fr auto 1fr;
+      grid-template-rows: 1fr auto 1fr auto;
       flex: 0 0 100%;
       height: clamp(500px, 78svh, 680px);
       min-width: 0;
@@ -387,6 +376,33 @@
       margin: 0 auto;
       object-fit: contain;
     }
+    .zoom-trigger {
+      position: relative;
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      border: 0;
+      padding: 0;
+      background: transparent;
+      cursor: zoom-in;
+    }
+    .zoom-trigger img { pointer-events: none; }
+    .zoom-trigger::after {
+      content: "+";
+      position: absolute;
+      right: 4px;
+      bottom: 4px;
+      display: grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: rgb(251 249 245 / .9);
+      font-size: 17px;
+      font-weight: 400;
+    }
     .swipe-hint {
       margin-top: 14px;
       color: var(--muted);
@@ -395,12 +411,43 @@
     }
     .concept-two-showcase {
       display: grid;
-      grid-template-rows: 1fr auto 1fr;
+      grid-template-rows: 1fr 1fr auto;
       width: calc(100% + 48px);
       height: clamp(500px, 78svh, 680px);
       margin: 42px -24px 0;
     }
     .concept-two-showcase .garment-view { background: var(--paper); }
+
+    .image-lightbox {
+      width: 100vw;
+      height: 100svh;
+      max-width: none;
+      max-height: none;
+      margin: 0;
+      border: 0;
+      padding: max(58px, var(--safe-top)) 18px max(24px, var(--safe-bottom));
+      background: var(--warm);
+    }
+    .image-lightbox::backdrop { background: rgb(38 35 31 / .45); }
+    .image-lightbox img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .lightbox-close {
+      position: absolute;
+      z-index: 2;
+      top: max(12px, var(--safe-top));
+      right: 14px;
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: var(--paper);
+      font-size: 23px;
+      line-height: 1;
+      cursor: pointer;
+    }
 
     .comparison .intro { margin-top: 56px; }
     .compare-list { margin-top: 48px; }
@@ -498,7 +545,7 @@
         page-break-after: always;
         break-after: page;
       }
-      .progress, .cover-action, .concept-viewer { display: none !important; }
+      .progress, .cover-action, .concept-viewer, .image-lightbox { display: none !important; }
       h1 { font-size: 25mm; }
       h2 { font-size: 19mm; }
       .cover-copy { margin-top: 25mm; }
@@ -594,11 +641,11 @@
       <div class="concept-heading">
         <span class="kicker">Neighbourhood Identity</span>
         <h2>Recognisable places. Shared identity.</h2>
-        <p>Choose an Option, then slide through its four complete back variations.</p>
+        <p>Choose a polo colour, then slide through its four complete back variations.</p>
       </div>
 
       <div class="option-block">
-        <div class="control-label"><span>Select Option</span><strong id="activeOptionLabel">Option 1 · Red + White</strong></div>
+        <div class="control-label"><span>Polo Tee Color Option</span></div>
         <div class="option-buttons" id="optionButtons"></div>
       </div>
 
@@ -607,7 +654,6 @@
       </div>
       <p class="swipe-hint">Swipe left or right to view another back variation.</p>
 
-      <a class="section-action" href="#concept-two">Continue to Concept 02 <span>↓</span></a>
     </section>
 
     <section class="concept-viewer" id="concept-two">
@@ -620,16 +666,17 @@
 
       <div class="concept-two-showcase">
         <figure class="garment-view">
-          <img src="assets/normalized/hem-front.png" alt="Concept 2 front view">
+          <button class="zoom-trigger" type="button" aria-label="Enlarge Concept 2 front view">
+            <img src="assets/normalized/hem-front.png" alt="Concept 2 front view">
+          </button>
         </figure>
-        <div class="slide-controls is-single">
-          <div class="slide-meta"><strong>Option 1A</strong><span>Community at the Hem</span></div>
-        </div>
         <figure class="garment-view">
-          <img src="assets/normalized/hem-back.png" alt="Concept 2 back view">
+          <button class="zoom-trigger" type="button" aria-label="Enlarge Concept 2 back view">
+            <img src="assets/normalized/hem-back.png" alt="Concept 2 back view">
+          </button>
         </figure>
+        <p class="variation-name">Community at the Hem</p>
       </div>
-      <a class="section-action" href="#comparison">Compare the Concepts <span>↓</span></a>
     </section>
 
     <section class="comparison" id="comparison">
@@ -668,6 +715,11 @@
       <p>For discussion with the<br>Teck Ghee Centraville RN Committee</p>
     </section>
   </main>
+
+  <dialog class="image-lightbox" id="imageLightbox" aria-label="Enlarged polo preview">
+    <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Close enlarged image">×</button>
+    <img id="lightboxImage" src="" alt="">
+  </dialog>
 
   <div class="print-catalog" id="printCatalog"></div>
 
@@ -715,7 +767,6 @@
     ];
 
     const optionButtons = document.getElementById('optionButtons');
-    const activeOptionLabel = document.getElementById('activeOptionLabel');
     const variationCarousel = document.getElementById('variationCarousel');
     const carouselTrack = document.getElementById('carouselTrack');
 
@@ -729,7 +780,7 @@
       optionButtons.innerHTML = optionData.map((option, index) => `
         <button class="option-button" type="button" data-option="${index}" aria-pressed="${index === activeOption}">
           <span class="swatch ${option.swatch}"></span>
-          <span>Option ${option.number}</span>
+          <span>${option.label}</span>
         </button>
       `).join('');
     }
@@ -737,30 +788,29 @@
     function buildSlides() {
       const option = optionData[activeOption];
       carouselTrack.innerHTML = variationData.map((variation, index) => `
-        <article class="variation-slide" aria-label="Option ${option.number}${variation.letter}">
+        <article class="variation-slide" aria-label="${option.label}, ${variation.title}">
           <figure class="garment-view">
-            <img src="${pathFor(option.front)}" alt="Option ${option.number}${variation.letter} front view">
+            <button class="zoom-trigger" type="button" aria-label="Enlarge ${option.label} front view">
+              <img src="${pathFor(option.front)}" alt="${option.label} front view">
+            </button>
           </figure>
-          <nav class="slide-controls" aria-label="Option ${option.number}${variation.letter} navigation">
+          <nav class="slide-controls" aria-label="${variation.title} navigation">
             <button type="button" data-inline-prev ${index === 0 ? 'disabled' : ''}>← Previous</button>
-            <div class="slide-meta">
-              <strong>Option ${option.number}${variation.letter}</strong>
-              <span>${variation.title}</span>
-              <small>${index + 1} of ${variationData.length}</small>
-            </div>
+            <span class="slide-count">${index + 1} / ${variationData.length}</span>
             <button type="button" data-inline-next ${index === variationData.length - 1 ? 'disabled' : ''}>Next →</button>
           </nav>
           <figure class="garment-view">
-            <img src="${pathFor(option.backs[index])}" alt="Option ${option.number}${variation.letter} back view">
+            <button class="zoom-trigger" type="button" aria-label="Enlarge ${variation.title} back view">
+              <img src="${pathFor(option.backs[index])}" alt="${option.label}, ${variation.title} back view">
+            </button>
           </figure>
+          <p class="variation-name">${variation.title}</p>
         </article>
       `).join('');
       variationCarousel.scrollLeft = 0;
     }
 
     function updateStatus() {
-      const option = optionData[activeOption];
-      activeOptionLabel.textContent = `Option ${option.number} · ${option.label}`;
       [...optionButtons.children].forEach((button, index) => button.setAttribute('aria-pressed', String(index === activeOption)));
     }
 
@@ -810,6 +860,27 @@
       }
     });
 
+    const imageLightbox = document.getElementById('imageLightbox');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxClose = document.getElementById('lightboxClose');
+
+    document.addEventListener('click', event => {
+      const trigger = event.target.closest('.zoom-trigger');
+      if (!trigger) return;
+      const source = trigger.querySelector('img');
+      lightboxImage.src = source.src;
+      lightboxImage.alt = source.alt;
+      imageLightbox.showModal();
+    });
+    lightboxClose.addEventListener('click', () => imageLightbox.close());
+    imageLightbox.addEventListener('click', event => {
+      if (event.target === imageLightbox) imageLightbox.close();
+    });
+    imageLightbox.addEventListener('close', () => {
+      lightboxImage.src = '';
+      lightboxImage.alt = '';
+    });
+
     const progressBar = document.getElementById('progressBar');
     function updateProgress() {
       const height = document.documentElement.scrollHeight - innerHeight;
@@ -824,9 +895,9 @@
     function buildPrintCatalog() {
       const pages = optionData.flatMap(option => variationData.map((variation, index) => `
         <article class="print-page">
-          <span class="kicker">Concept 01 · Option ${option.number}${variation.letter}</span>
+          <span class="kicker">Concept 01 · ${option.label}</span>
           <h2>${variation.title}</h2>
-          <p>${option.label} — ${option.detail}</p>
+          <p>${option.detail}</p>
           <figure class="print-pair">
             <img src="${pathFor(option.front)}" alt="">
             <img src="${pathFor(option.backs[index])}" alt="">
@@ -835,7 +906,7 @@
       `));
       pages.push(`
         <article class="print-page">
-          <span class="kicker">Concept 02 · Option 1A</span>
+          <span class="kicker">Concept 02</span>
           <h2>Community Lifestyle</h2>
           <p>Blue + Green — community scenes along the front and back hem.</p>
           <figure class="print-pair">
