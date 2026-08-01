@@ -486,11 +486,13 @@
     .closing {
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
+      padding-bottom: 0;
       text-align: center;
       background: var(--warm) !important;
     }
-    .closing small {
+    .closing-copy { padding-top: 5vh; }
+    .closing-copy > small {
       color: var(--red);
       font-size: 10px;
       font-weight: 700;
@@ -498,8 +500,8 @@
       text-transform: uppercase;
     }
     .closing h2 {
-      margin-top: 24px;
-      font-size: clamp(52px, 15vw, 82px);
+      margin-top: 18px;
+      font-size: clamp(43px, 12vw, 68px);
     }
     .closing h2 span {
       display: block;
@@ -508,10 +510,27 @@
       font-weight: 400;
     }
     .closing p {
-      margin-top: 30px;
+      margin-top: 20px;
       color: var(--muted);
       font-size: 13px;
       line-height: 1.6;
+    }
+    .closing-credit {
+      display: block;
+      margin-top: 14px;
+      color: #918b82;
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .closing-photo {
+      width: calc(100% + 48px);
+      margin: auto -24px 0;
+    }
+    .closing-photo img {
+      width: 100%;
+      height: auto;
     }
 
     .print-catalog { display: none; }
@@ -520,7 +539,7 @@
       body { padding: 30px 0; }
       .proposal { overflow: hidden; border-radius: 5px; }
       section { padding-right: 38px; padding-left: 38px; }
-      .cover-polo, .carousel, .concept-two-showcase {
+      .cover-polo, .carousel, .concept-two-showcase, .closing-photo {
         width: calc(100% + 76px);
         margin-left: -38px;
       }
@@ -710,9 +729,15 @@
     </section>
 
     <section class="closing" id="closing">
-      <small>Thank you</small>
-      <h2>Together,<span>We Represent</span>Centraville.</h2>
-      <p>For discussion with the<br>Teck Ghee Centraville RN Committee</p>
+      <div class="closing-copy">
+        <small>Thank you</small>
+        <h2>Together,<span>We Represent</span>Centraville.</h2>
+        <p>For discussion with the<br>Teck Ghee Centraville RN Committee</p>
+        <span class="closing-credit">Prepare by Alex Lu</span>
+      </div>
+      <figure class="closing-photo">
+        <img src="assets/closing-community.png" alt="Centraville volunteers wearing the proposed polo at a community registration event">
+      </figure>
     </section>
   </main>
 
