@@ -124,8 +124,17 @@
       font-style: italic;
     }
     .cover-polo {
+      display: grid;
+      place-items: center;
       width: calc(100% + 48px);
-      margin: auto -24px -32px;
+      height: min(56svh, 560px);
+      margin: auto -24px 0;
+    }
+    .cover-polo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transform: translateY(3%);
     }
     .cover-action, .section-action {
       display: inline-flex;
@@ -182,6 +191,19 @@
       text-decoration: none;
     }
     .concept-card:last-child { border-bottom: 1px solid var(--line); }
+    .concept-card-cover {
+      display: flex;
+      align-items: flex-end;
+      min-height: 120px;
+      margin-bottom: 22px;
+      background: transparent;
+    }
+    .concept-card-cover img {
+      width: 100%;
+      max-height: 220px;
+      object-fit: contain;
+      object-position: left bottom;
+    }
     .concept-card-head {
       display: flex;
       align-items: center;
@@ -240,22 +262,25 @@
     .control-label strong { color: var(--red); }
     .option-buttons {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 9px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 6px;
       margin-top: 13px;
     }
     .option-button {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 10px;
-      min-height: 57px;
+      justify-content: center;
+      gap: 5px;
+      min-height: 65px;
       border: 1px solid var(--line);
       border-radius: 8px;
-      padding: 10px 11px;
+      padding: 7px 3px;
       background: transparent;
-      font-size: 11px;
+      font-size: 9px;
       font-weight: 700;
-      text-align: left;
+      line-height: 1.15;
+      text-align: center;
       cursor: pointer;
     }
     .option-button[aria-pressed="true"] {
@@ -264,9 +289,7 @@
       box-shadow: 0 5px 16px rgb(57 47 34 / .07);
     }
     .option-button[aria-pressed="true"]::after {
-      content: "✓";
-      margin-left: auto;
-      color: var(--red);
+      content: none;
     }
     .swatch {
       width: 27px;
@@ -280,59 +303,53 @@
     .red-orange { background: linear-gradient(90deg, var(--red) 70%, var(--orange) 70%); }
     .blue-green { background: linear-gradient(90deg, var(--blue) 70%, var(--green) 70%); }
 
-    .variation-header {
-      margin-top: 40px;
-      text-align: center;
+    .slide-controls {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr 1fr;
+      align-items: center;
+      gap: 8px;
+      min-height: 64px;
+      padding: 7px 14px;
+      background: var(--warm);
     }
-    .variation-code {
-      color: var(--red);
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-    }
-    .variation-title {
-      margin-top: 8px;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 22px;
-      font-weight: 400;
-    }
-    .variation-position {
-      margin-top: 6px;
-      color: var(--muted);
+    .slide-controls button {
+      min-height: 44px;
+      border: 0;
+      padding: 0;
+      background: transparent;
       font-size: 9px;
       font-weight: 700;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-    }
-
-    .variation-nav {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      align-items: center;
-      gap: 10px;
-      margin-top: 18px;
-    }
-    .variation-nav button {
-      min-height: 48px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 0 15px;
-      background: transparent;
-      font-size: 10px;
-      font-weight: 700;
+      letter-spacing: .04em;
       cursor: pointer;
     }
-    .variation-nav button:first-child { text-align: left; }
-    .variation-nav button:last-child { text-align: right; }
-    .variation-nav button:disabled { opacity: .3; cursor: default; }
-    .variation-nav span {
-      min-width: 38px;
-      color: var(--muted);
+    .slide-controls button:first-child { text-align: left; }
+    .slide-controls button:last-child { text-align: right; }
+    .slide-controls button:disabled { opacity: .25; cursor: default; }
+    .slide-meta { text-align: center; }
+    .slide-meta strong,
+    .slide-meta span,
+    .slide-meta small { display: block; }
+    .slide-meta strong {
+      color: var(--red);
       font-size: 10px;
-      font-weight: 700;
-      text-align: center;
+      letter-spacing: .12em;
+      text-transform: uppercase;
     }
+    .slide-meta span {
+      margin-top: 3px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      line-height: 1.15;
+    }
+    .slide-meta small {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .slide-controls.is-single { grid-template-columns: 1fr; }
 
     .carousel {
       width: calc(100% + 48px);
@@ -348,7 +365,7 @@
     .carousel-track { display: flex; align-items: stretch; }
     .variation-slide {
       display: grid;
-      grid-template-rows: 1fr 1fr;
+      grid-template-rows: 1fr auto 1fr;
       flex: 0 0 100%;
       height: clamp(500px, 78svh, 680px);
       min-width: 0;
@@ -357,13 +374,10 @@
     }
     .garment-view {
       display: grid;
-      grid-template-rows: minmax(0, 1fr) auto;
+      place-items: center;
       min-height: 0;
       padding: 10px 18px 12px;
       background: var(--warm);
-    }
-    .garment-view + .garment-view {
-      border-top: 1px solid var(--line);
     }
     .garment-view img {
       width: 100%;
@@ -373,48 +387,20 @@
       margin: 0 auto;
       object-fit: contain;
     }
-    .garment-view figcaption {
-      margin-top: 4px;
-      color: var(--muted);
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: .14em;
-      text-align: center;
-      text-transform: uppercase;
-    }
     .swipe-hint {
       margin-top: 14px;
       color: var(--muted);
       font-size: 9px;
       text-align: center;
     }
-    .bottom-nav { margin-top: 20px; }
-
     .concept-two-showcase {
       display: grid;
-      grid-template-rows: 1fr 1fr;
+      grid-template-rows: 1fr auto 1fr;
       width: calc(100% + 48px);
       height: clamp(500px, 78svh, 680px);
       margin: 42px -24px 0;
     }
     .concept-two-showcase .garment-view { background: var(--paper); }
-    .concept-two-label {
-      margin-top: 28px;
-      text-align: center;
-    }
-    .concept-two-label strong {
-      color: var(--red);
-      font-size: 10px;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-    }
-    .concept-two-label p {
-      margin-top: 9px;
-      color: var(--muted);
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 17px;
-      line-height: 1.4;
-    }
 
     .comparison .intro { margin-top: 56px; }
     .compare-list { margin-top: 48px; }
@@ -535,14 +521,6 @@
         margin-top: 10mm;
       }
       .print-pair img { width: 100%; }
-      .print-pair figcaption {
-        grid-column: 1 / -1;
-        color: var(--muted);
-        font-size: 3mm;
-        font-weight: 700;
-        text-align: center;
-        text-transform: uppercase;
-      }
     }
   </style>
 </head>
@@ -565,7 +543,7 @@
         <p>Prepared concepts and variations for committee discussion.</p>
       </div>
       <figure class="cover-polo">
-        <img src="assets/normalized/red-white-front.png" alt="Front view of a Centraville volunteer polo">
+        <img src="assets/cover-perspective.png" alt="Three-quarter perspective view of the Centraville volunteer polo">
       </figure>
       <a class="cover-action" href="#objective">Start viewing <span>↓</span></a>
     </section>
@@ -589,6 +567,9 @@
       </div>
       <div class="concept-list">
         <a class="concept-card" href="#concept-one">
+          <figure class="concept-card-cover">
+            <img src="assets/concept-cover-1.png" alt="Line illustration of recognisable Centraville landmarks">
+          </figure>
           <div class="concept-card-head">
             <div><small>Concept 01</small><h3>Neighbourhood Identity</h3></div>
             <span>→</span>
@@ -596,6 +577,9 @@
           <p>Four colour options, each with four prepared back variations.</p>
         </a>
         <a class="concept-card" href="#concept-two">
+          <figure class="concept-card-cover">
+            <img src="assets/concept-cover-2.png" alt="Line illustration of everyday community life around AMK Hub and 724 Market">
+          </figure>
           <div class="concept-card-head">
             <div><small>Concept 02</small><h3>Community Lifestyle</h3></div>
             <span>→</span>
@@ -618,28 +602,10 @@
         <div class="option-buttons" id="optionButtons"></div>
       </div>
 
-      <div class="variation-header" aria-live="polite">
-        <p class="variation-code" id="variationCode">Option 1A</p>
-        <h3 class="variation-title" id="variationTitle">Clear Wordmark</h3>
-        <p class="variation-position" id="variationPosition">Variation 1 of 4</p>
-      </div>
-
-      <nav class="variation-nav" aria-label="Variation navigation">
-        <button type="button" data-slide-prev>← Previous</button>
-        <span id="topSlideCount">1 / 4</span>
-        <button type="button" data-slide-next>Next →</button>
-      </nav>
-
       <div class="carousel" id="variationCarousel" tabindex="0" aria-label="Swipe through complete variations">
         <div class="carousel-track" id="carouselTrack"></div>
       </div>
       <p class="swipe-hint">Swipe left or right to view another back variation.</p>
-
-      <nav class="variation-nav bottom-nav" aria-label="Variation navigation">
-        <button type="button" data-slide-prev>← Previous</button>
-        <span id="bottomSlideCount">1 / 4</span>
-        <button type="button" data-slide-next>Next →</button>
-      </nav>
 
       <a class="section-action" href="#concept-two">Continue to Concept 02 <span>↓</span></a>
     </section>
@@ -652,18 +618,15 @@
         <p>A complete blue and green option with community scenes along the lower front and back.</p>
       </div>
 
-      <div class="concept-two-label">
-        <strong>Option 1A · Blue + Green</strong>
-        <p>Front and back are presented at the same size.</p>
-      </div>
       <div class="concept-two-showcase">
         <figure class="garment-view">
           <img src="assets/normalized/hem-front.png" alt="Concept 2 front view">
-          <figcaption>Front</figcaption>
         </figure>
+        <div class="slide-controls is-single">
+          <div class="slide-meta"><strong>Option 1A</strong><span>Community at the Hem</span></div>
+        </div>
         <figure class="garment-view">
           <img src="assets/normalized/hem-back.png" alt="Concept 2 back view">
-          <figcaption>Back</figcaption>
         </figure>
       </div>
       <a class="section-action" href="#comparison">Compare the Concepts <span>↓</span></a>
@@ -753,15 +716,8 @@
 
     const optionButtons = document.getElementById('optionButtons');
     const activeOptionLabel = document.getElementById('activeOptionLabel');
-    const variationCode = document.getElementById('variationCode');
-    const variationTitle = document.getElementById('variationTitle');
-    const variationPosition = document.getElementById('variationPosition');
-    const topSlideCount = document.getElementById('topSlideCount');
-    const bottomSlideCount = document.getElementById('bottomSlideCount');
     const variationCarousel = document.getElementById('variationCarousel');
     const carouselTrack = document.getElementById('carouselTrack');
-    const previousButtons = [...document.querySelectorAll('[data-slide-prev]')];
-    const nextButtons = [...document.querySelectorAll('[data-slide-next]')];
 
     let activeOption = 0;
     let activeVariation = 0;
@@ -773,7 +729,7 @@
       optionButtons.innerHTML = optionData.map((option, index) => `
         <button class="option-button" type="button" data-option="${index}" aria-pressed="${index === activeOption}">
           <span class="swatch ${option.swatch}"></span>
-          <span>Option ${option.number}<br><small>${option.label}</small></span>
+          <span>Option ${option.number}</span>
         </button>
       `).join('');
     }
@@ -784,11 +740,18 @@
         <article class="variation-slide" aria-label="Option ${option.number}${variation.letter}">
           <figure class="garment-view">
             <img src="${pathFor(option.front)}" alt="Option ${option.number}${variation.letter} front view">
-            <figcaption>Front · Option ${option.number}</figcaption>
           </figure>
+          <nav class="slide-controls" aria-label="Option ${option.number}${variation.letter} navigation">
+            <button type="button" data-inline-prev ${index === 0 ? 'disabled' : ''}>← Previous</button>
+            <div class="slide-meta">
+              <strong>Option ${option.number}${variation.letter}</strong>
+              <span>${variation.title}</span>
+              <small>${index + 1} of ${variationData.length}</small>
+            </div>
+            <button type="button" data-inline-next ${index === variationData.length - 1 ? 'disabled' : ''}>Next →</button>
+          </nav>
           <figure class="garment-view">
             <img src="${pathFor(option.backs[index])}" alt="Option ${option.number}${variation.letter} back view">
-            <figcaption>Back · Variation ${variation.letter}</figcaption>
           </figure>
         </article>
       `).join('');
@@ -797,15 +760,7 @@
 
     function updateStatus() {
       const option = optionData[activeOption];
-      const variation = variationData[activeVariation];
       activeOptionLabel.textContent = `Option ${option.number} · ${option.label}`;
-      variationCode.textContent = `Option ${option.number}${variation.letter}`;
-      variationTitle.textContent = variation.title;
-      variationPosition.textContent = `Variation ${activeVariation + 1} of ${variationData.length}`;
-      topSlideCount.textContent = `${activeVariation + 1} / ${variationData.length}`;
-      bottomSlideCount.textContent = `${activeVariation + 1} / ${variationData.length}`;
-      previousButtons.forEach(button => button.disabled = activeVariation === 0);
-      nextButtons.forEach(button => button.disabled = activeVariation === variationData.length - 1);
       [...optionButtons.children].forEach((button, index) => button.setAttribute('aria-pressed', String(index === activeOption)));
     }
 
@@ -828,8 +783,10 @@
       if (!button) return;
       selectOption(Number(button.dataset.option));
     });
-    previousButtons.forEach(button => button.addEventListener('click', () => goToVariation(activeVariation - 1)));
-    nextButtons.forEach(button => button.addEventListener('click', () => goToVariation(activeVariation + 1)));
+    carouselTrack.addEventListener('click', event => {
+      if (event.target.closest('[data-inline-prev]')) goToVariation(activeVariation - 1);
+      if (event.target.closest('[data-inline-next]')) goToVariation(activeVariation + 1);
+    });
 
     variationCarousel.addEventListener('scroll', () => {
       clearTimeout(scrollTimer);
@@ -873,7 +830,6 @@
           <figure class="print-pair">
             <img src="${pathFor(option.front)}" alt="">
             <img src="${pathFor(option.backs[index])}" alt="">
-            <figcaption>Front · Back</figcaption>
           </figure>
         </article>
       `));
@@ -885,7 +841,6 @@
           <figure class="print-pair">
             <img src="${pathFor('hem-front.png')}" alt="">
             <img src="${pathFor('hem-back.png')}" alt="">
-            <figcaption>Front · Back</figcaption>
           </figure>
         </article>
       `);
