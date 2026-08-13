@@ -55,13 +55,25 @@
     .home-intro-cover{position:absolute;z-index:3;left:0;top:27%;width:100%;height:11.4%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#ffe08a;text-align:center}
     .home-intro-cover strong{font-size:clamp(24px,7vw,60px);line-height:1.05;text-shadow:0 3px 5px #420000}
     .home-intro-cover span{margin-top:2%;font-size:clamp(13px,3.4vw,29px);color:#ffe9bc}
-    .mode-fab{position:absolute;z-index:10;right:3.5%;bottom:3.5%;width:clamp(52px,13vw,92px);aspect-ratio:1;border:2px solid #ffe08a;border-radius:50%;background:linear-gradient(145deg,#ffe79a,#d79522 70%,#9c540b);color:#770b07;font-size:clamp(23px,6vw,48px);font-weight:900;box-shadow:0 5px 18px rgba(35,0,0,.65);cursor:pointer}
-    .mode-fab[hidden],.mode-menu[hidden]{display:none}
-    .mode-menu{position:absolute;z-index:11;right:3.5%;bottom:calc(3.5% + clamp(62px,15vw,106px));width:clamp(210px,55vw,400px);padding:10px;border:2px solid #d79a2b;border-radius:var(--radius);background:linear-gradient(145deg,rgba(94,8,5,.98),rgba(45,3,2,.99));box-shadow:0 10px 24px rgba(25,0,0,.65)}
-    .mode-menu-title{padding:6px 8px 10px;color:#ffe29a;font-size:clamp(11px,2.7vw,23px);font-weight:800}
-    .mode-choice{width:100%;padding:12px 14px;border:1px solid transparent;border-radius:var(--radius);background:transparent;color:#f3c965;text-align:left;font-weight:800;cursor:pointer}
+    .mode-switch{position:absolute;z-index:10;right:3.5%;bottom:3.5%;display:flex;flex-direction:column;align-items:flex-end}
+    .mode-switch.done-mode-switch{left:5.3%;right:5.3%;top:73.5%;bottom:auto;align-items:stretch}
+    .mode-trigger{min-width:clamp(190px,49vw,360px);min-height:clamp(52px,12vw,86px);display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;padding:9px 14px;border:2px solid #ffe08a;border-radius:var(--radius);background:linear-gradient(145deg,#ffe79a,#d79522 70%,#9c540b);color:#770b07;text-align:left;box-shadow:0 5px 18px rgba(35,0,0,.65);cursor:pointer}
+    .mode-trigger-icon{font-size:clamp(22px,5vw,42px);line-height:1}
+    .mode-trigger-copy{display:flex;flex-direction:column;line-height:1.1}
+    .mode-trigger-copy small{font-size:clamp(8px,1.9vw,16px);letter-spacing:.07em}
+    .mode-trigger-copy strong{margin-top:4px;font-size:clamp(12px,3vw,25px)}
+    .mode-trigger-arrow{font-size:clamp(15px,3.6vw,30px)}
+    .mode-menu[hidden]{display:none}
+    .mode-menu{position:absolute;z-index:11;right:0;bottom:calc(100% + 10px);width:clamp(270px,68vw,500px);padding:10px;border:2px solid #d79a2b;border-radius:var(--radius);background:linear-gradient(145deg,rgba(94,8,5,.99),rgba(45,3,2,.99));box-shadow:0 10px 24px rgba(25,0,0,.65)}
+    .done-mode-switch .mode-menu{left:0;right:0;width:auto}
+    .mode-menu-title{padding:7px 9px 11px;color:#ffe29a;font-size:clamp(11px,2.7vw,23px);font-weight:900;letter-spacing:.04em}
+    .mode-choice{position:relative;width:100%;padding:11px 42px 11px 13px;border:1px solid #8d4615;border-radius:var(--radius);background:rgba(91,7,4,.55);color:#f3c965;text-align:left;cursor:pointer}
+    .mode-choice strong{display:block;font-size:clamp(12px,3vw,25px)}
+    .mode-choice small{display:block;margin-top:4px;color:#d8aa50;font-size:clamp(9px,2.2vw,18px);font-weight:500;line-height:1.25}
+    .mode-choice::after{content:'';position:absolute;right:15px;top:50%;transform:translateY(-50%);width:20px;aspect-ratio:1;border:1.5px solid #c98c2e;border-radius:50%}
     .mode-choice+.mode-choice{margin-top:6px}
-    .mode-choice.active{border-color:#e7b64c;background:#86110b;color:#fff0b0}
+    .mode-choice.active{border-color:#ffe08a;background:#86110b;color:#fff0b0;box-shadow:inset 0 0 0 1px #d99a2c}
+    .mode-choice.active::after{content:'✓';display:grid;place-items:center;background:#f0bd50;color:#661006;font-weight:900}
     .game-card{color:#ffe08a;border:2px solid #e8ad39;border-radius:var(--radius);overflow:hidden;text-align:left;background:radial-gradient(circle at 70% 45%,#8f170f 0%,#6d0a07 52%,#4c0403 100%);box-shadow:inset 0 0 24px rgba(255,117,24,.2),0 5px 13px rgba(30,0,0,.45);padding:4.2% 4.7%;display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto 1fr auto;grid-template-areas:"title title" "balls balls" "sub cta";column-gap:4%;row-gap:4%}
     .game-card:active{background:radial-gradient(circle at 70% 45%,#a61d12 0%,#770c08 52%,#520403 100%)}
     .game-card-title{grid-area:title;position:relative;z-index:2;display:block;font-size:clamp(18px,5.1vw,43px);font-weight:900;line-height:1.05;text-shadow:0 2px 3px #3f0000;white-space:nowrap}
@@ -165,11 +177,15 @@
         <span class="game-card-sub">Choose your<br>6+1 lucky numbers</span>
         <span class="game-card-cta">SELECT ›</span>
       </button>
-      <button class="mode-fab" id="modeFab" data-action="toggle-mode-menu" aria-label="Change number selection mode" aria-expanded="false">⇄</button>
-      <div class="mode-menu" id="modeMenu" hidden>
-        <div class="mode-menu-title">NUMBER SELECTION MODE</div>
-        <button class="mode-choice active" data-action="set-random">QUICK PICK</button>
-        <button class="mode-choice" data-action="set-custom">CHOOSE MY OWN</button>
+      <div class="mode-switch">
+        <button class="mode-trigger" data-action="toggle-mode-menu" aria-label="Change number selection mode" aria-expanded="false">
+          <span class="mode-trigger-icon">⇄</span><span class="mode-trigger-copy"><small>CURRENT MODE</small><strong class="current-mode-label">QUICK PICK</strong></span><span class="mode-trigger-arrow">⌃</span>
+        </button>
+        <div class="mode-menu" hidden>
+          <div class="mode-menu-title">CHOOSE A SELECTION MODE</div>
+          <button class="mode-choice active" data-action="set-random"><strong>QUICK PICK</strong><small>Select one system-generated combination</small></button>
+          <button class="mode-choice" data-action="set-custom"><strong>CHOOSE MY OWN</strong><small>Choose every number yourself</small></button>
+        </div>
       </div>
     </section>
 
@@ -223,17 +239,27 @@
         <div class="result-title">GRAND PRIZE LUCKY DRAW</div>
         <div class="summary mark" id="markSummary" aria-label="Selected Grand Prize Lucky Draw combination"></div>
       </div>
+      <div class="mode-switch done-mode-switch">
+        <button class="mode-trigger" data-action="toggle-mode-menu" aria-label="Change number selection mode" aria-expanded="false">
+          <span class="mode-trigger-icon">⇄</span><span class="mode-trigger-copy"><small>SUBMITTED WITH</small><strong class="current-mode-label">QUICK PICK</strong></span><span class="mode-trigger-arrow">⌃</span>
+        </button>
+        <div class="mode-menu" hidden>
+          <div class="mode-menu-title">TRY THE OTHER PROTOTYPE OPTION</div>
+          <button class="mode-choice active" data-action="set-random"><strong>QUICK PICK</strong><small>Select one system-generated combination</small></button>
+          <button class="mode-choice" data-action="set-custom"><strong>CHOOSE MY OWN</strong><small>Choose every number yourself</small></button>
+        </div>
+      </div>
       <button class="hotspot home-final" data-action="home" aria-label="Back to home">Back to home</button>
     </section>
     <div class="profile-card" id="profileCard" hidden>
       <span class="profile-avatar" aria-hidden="true"></span>
-      <span class="profile-copy"><span class="profile-name">Hi, Ethan Lim</span><span class="profile-company">MERQURI</span></span>
+      <span class="profile-copy"><span class="profile-name">Hi, Alex Lu</span><span class="profile-company">MERQURI</span></span>
       <button class="logout-btn" data-action="logout">LOGOUT</button>
     </div>
     <div class="account-menu" id="accountMenu" hidden>
       <button class="account-trigger" id="accountTrigger" type="button" aria-label="Open account menu" aria-expanded="false"></button>
       <div class="account-dropdown" id="accountDropdown" hidden>
-        <div class="account-user">Ethan Lim</div>
+        <div class="account-user">Alex Lu</div>
         <div class="account-company">MERQURI</div>
         <button class="account-logout" data-action="logout">LOGOUT</button>
       </div>
@@ -271,16 +297,18 @@
     });
     document.addEventListener('click',closeAccountMenu);
     function closeModeMenu(){
-      document.getElementById('modeMenu').hidden=true;
-      document.getElementById('modeFab').setAttribute('aria-expanded','false');
+      document.querySelectorAll('.mode-menu').forEach(menu=>menu.hidden=true);
+      document.querySelectorAll('.mode-trigger').forEach(trigger=>trigger.setAttribute('aria-expanded','false'));
     }
     function applyMode(mode){
       selectionMode=mode;
-      document.querySelectorAll('.mode-choice').forEach((b,i)=>b.classList.toggle('active',(mode==='random'&&i===0)||(mode==='custom'&&i===1)));
+      document.querySelectorAll('.mode-choice').forEach(b=>b.classList.toggle('active',b.dataset.action===(mode==='random'?'set-random':'set-custom')));
+      document.querySelectorAll('.current-mode-label').forEach(label=>label.textContent=mode==='random'?'QUICK PICK':'CHOOSE MY OWN');
       fourGrid.hidden=mode==='custom'; markList.hidden=mode==='custom';
       customFour.hidden=mode!=='custom'; customMark.hidden=mode!=='custom';
       document.querySelectorAll('[data-action^="refresh-"]').forEach(b=>b.textContent=mode==='custom'?'CLEAR':'NEW BATCH');
       fourChoice=null; markChoice=null; closeModeMenu();
+      if(document.querySelector('[data-screen="done"]').classList.contains('active')) show('home');
     }
     function randomUnique(count,min,max,formatter=n=>String(n)){
       const values=new Set();
@@ -373,8 +401,9 @@
       if(action==='open-4d') show('four');
       if(action==='open-mark') show('mark');
       if(action==='toggle-mode-menu'){
-        const menu=document.getElementById('modeMenu'); menu.hidden=!menu.hidden;
-        document.getElementById('modeFab').setAttribute('aria-expanded',String(!menu.hidden));
+        const switcher=e.target.closest('.mode-switch');
+        const menu=switcher.querySelector('.mode-menu'); const trigger=switcher.querySelector('.mode-trigger');
+        const willOpen=menu.hidden; closeModeMenu(); menu.hidden=!willOpen; trigger.setAttribute('aria-expanded',String(willOpen));
       }
       if(action==='set-random') applyMode('random');
       if(action==='set-custom') applyMode('custom');
