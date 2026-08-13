@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+  <meta name="theme-color" content="#4a0503">
+  <title>CNY 2027 Lucky Number Selection</title>
+  <style>
+    :root{--gold:#ffd46b;--red:#9f140c;--ink:#4b0503;--radius:16px}
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%;background:#160201;font-family:Arial,Helvetica,sans-serif}
+    body{display:grid;place-items:start center;overflow-x:hidden}
+    button{font:inherit}
+    .phone{position:relative;width:min(100vw,853px);aspect-ratio:853/1844;overflow:hidden;background:#4b0503;box-shadow:0 0 45px #000;isolation:isolate}
+    .screen{position:absolute;inset:0;display:none}
+    .screen.active{display:block;animation:enter .24s ease-out}
+    @keyframes enter{from{opacity:.35;transform:translateX(1.5%)}to{opacity:1;transform:none}}
+    .art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
+    .hotspot{position:absolute;z-index:6;border:0;background:transparent;color:transparent;cursor:pointer;border-radius:var(--radius);touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+    .hotspot:focus-visible{outline:4px solid #fff3ad;outline-offset:4px}
+    .hotspot:active{background:rgba(255,214,92,.16)}
+    .back{left:3.5%;top:4%;transform:translateY(-50%);width:8.5%;height:auto;aspect-ratio:1;border:1.5px solid #d9a943;border-radius:50%;color:#ffe28a;font-size:clamp(22px,6vw,50px);display:grid;place-items:center;background:rgba(77,5,3,.75);padding:0}
+    .back::before{content:'‹';transform:translateY(-4%)}
+    .profile-card{position:absolute;z-index:5;left:6.5%;top:19.4%;width:87%;height:7.4%;display:flex;align-items:center;padding:1.3% 3.7%;border:2px solid #c27618;border-radius:var(--radius);background:linear-gradient(115deg,rgba(111,12,8,.91),rgba(53,3,2,.92));box-shadow:inset 0 0 20px rgba(255,115,20,.13),0 4px 11px rgba(28,0,0,.38);color:#ffe18a}
+    .profile-avatar{width:12%;aspect-ratio:1;border-radius:50%;display:grid;place-items:end center;overflow:hidden;background:linear-gradient(145deg,#fff0a2,#d78f20 65%,#9d560e);border:2px solid #ffe28b;box-shadow:0 2px 9px #380000;position:relative}
+    .profile-avatar::before{content:"";position:absolute;top:17%;width:33%;aspect-ratio:1;border-radius:50%;background:#580503}
+    .profile-avatar::after{content:"";position:absolute;bottom:-17%;width:65%;height:54%;border-radius:50% 50% 0 0;background:#580503}
+    .profile-copy{margin-left:3%;line-height:1.08;display:flex;flex-direction:column}
+    .profile-name{font-size:clamp(17px,4.6vw,39px);font-weight:800;color:#ffe4a1;text-shadow:0 2px 3px #420000}
+    .profile-company{margin-top:6%;font-size:clamp(11px,2.9vw,25px);color:#e9b94d}
+    .profile-card[hidden]{display:none}
+    .logout-btn{margin-left:auto;border:0;background:transparent;color:#f8d672;font-size:clamp(11px,2.8vw,24px);font-weight:700;cursor:pointer;padding:3% 1%;display:flex;align-items:center;gap:.5em}
+    .logout-btn::before{content:'⇥';font-size:1.45em}
+    .logout-btn:focus-visible{outline:3px solid #fff1a7;border-radius:8px}
+    .account-menu{position:absolute;z-index:12;right:4%;top:4%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:flex-end}
+    .account-menu[hidden]{display:none}
+    .account-trigger{position:relative;width:clamp(42px,10vw,78px);aspect-ratio:1;border:2px solid #ffe28b;border-radius:50%;overflow:hidden;background:linear-gradient(145deg,#fff0a2,#d78f20 65%,#9d560e);box-shadow:0 3px 12px rgba(35,0,0,.55);cursor:pointer}
+    .account-trigger::before{content:"";position:absolute;top:17%;left:33%;width:34%;aspect-ratio:1;border-radius:50%;background:#580503}
+    .account-trigger::after{content:"";position:absolute;left:18%;bottom:-17%;width:64%;height:54%;border-radius:50% 50% 0 0;background:#580503}
+    .account-trigger:focus-visible{outline:3px solid #fff3ad;outline-offset:3px}
+    .account-dropdown{position:absolute;right:0;top:calc(100% + 10px);width:clamp(190px,46vw,350px);padding:18px;border:2px solid #d29326;border-radius:var(--radius);background:linear-gradient(145deg,rgba(104,10,7,.98),rgba(48,3,2,.99));box-shadow:0 10px 25px rgba(20,0,0,.6);color:#ffe29a}
+    .account-dropdown[hidden]{display:none}
+    .account-user{font-size:clamp(13px,3.6vw,29px);font-weight:800;white-space:nowrap}
+    .account-company{margin-top:8px;font-size:clamp(10px,2.6vw,22px);color:#e9b94d}
+    .account-logout{width:100%;margin-top:18px;padding:13px 12px;border:1px solid #f1c45e;border-radius:var(--radius);background:#790d08;color:#ffe18a;font-weight:800;cursor:pointer}
+    .account-logout::before{content:'⇥ ';font-size:1.2em}
+    .game-topbar{position:absolute;z-index:5;left:0;top:0;width:100%;height:8%;display:flex;align-items:center;padding:0 15%;background:linear-gradient(180deg,rgba(94,8,5,.97),rgba(61,3,2,.94));border-bottom:1px solid rgba(190,114,25,.75);box-shadow:0 5px 16px rgba(31,0,0,.3);color:#f8cf70}
+    .game-topbar::after{content:'◆';position:absolute;left:50%;bottom:-.55em;transform:translateX(-50%);padding:0 .8em;background:#570604;color:#d79b2b;font-size:clamp(8px,2vw,17px)}
+    .game-topbar-copy{display:flex;align-items:center;line-height:1}
+    .game-topbar-copy strong{font-size:clamp(15px,4.1vw,35px);letter-spacing:.03em}
+    .game-topbar-copy span{margin-top:5%;font-size:clamp(8px,2.15vw,18px);color:#dca844;letter-spacing:.08em}
+    .login{left:11.5%;top:60.3%;width:76.8%;height:7.2%}
+    .game4d{left:6.5%;top:38.7%;width:87%;height:18%}
+    .gamemark{left:6.5%;top:57.6%;width:87%;height:18%}
+    .home-intro-cover{position:absolute;z-index:3;left:0;top:27%;width:100%;height:11.4%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#ffe08a;text-align:center}
+    .home-intro-cover strong{font-size:clamp(24px,7vw,60px);line-height:1.05;text-shadow:0 3px 5px #420000}
+    .home-intro-cover span{margin-top:2%;font-size:clamp(13px,3.4vw,29px);color:#ffe9bc}
+    .mode-fab{position:absolute;z-index:10;right:3.5%;bottom:3.5%;width:clamp(52px,13vw,92px);aspect-ratio:1;border:2px solid #ffe08a;border-radius:50%;background:linear-gradient(145deg,#ffe79a,#d79522 70%,#9c540b);color:#770b07;font-size:clamp(23px,6vw,48px);font-weight:900;box-shadow:0 5px 18px rgba(35,0,0,.65);cursor:pointer}
+    .mode-fab[hidden],.mode-menu[hidden]{display:none}
+    .mode-menu{position:absolute;z-index:11;right:3.5%;bottom:calc(3.5% + clamp(62px,15vw,106px));width:clamp(210px,55vw,400px);padding:10px;border:2px solid #d79a2b;border-radius:var(--radius);background:linear-gradient(145deg,rgba(94,8,5,.98),rgba(45,3,2,.99));box-shadow:0 10px 24px rgba(25,0,0,.65)}
+    .mode-menu-title{padding:6px 8px 10px;color:#ffe29a;font-size:clamp(11px,2.7vw,23px);font-weight:800}
+    .mode-choice{width:100%;padding:12px 14px;border:1px solid transparent;border-radius:var(--radius);background:transparent;color:#f3c965;text-align:left;font-weight:800;cursor:pointer}
+    .mode-choice+.mode-choice{margin-top:6px}
+    .mode-choice.active{border-color:#e7b64c;background:#86110b;color:#fff0b0}
+    .game-card{color:#ffe08a;border:2px solid #e8ad39;border-radius:var(--radius);overflow:hidden;text-align:left;background:radial-gradient(circle at 70% 45%,#8f170f 0%,#6d0a07 52%,#4c0403 100%);box-shadow:inset 0 0 24px rgba(255,117,24,.2),0 5px 13px rgba(30,0,0,.45);padding:4.2% 4.7%;display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto 1fr auto;grid-template-areas:"title title" "balls balls" "sub cta";column-gap:4%;row-gap:4%}
+    .game-card:active{background:radial-gradient(circle at 70% 45%,#a61d12 0%,#770c08 52%,#520403 100%)}
+    .game-card-title{grid-area:title;position:relative;z-index:2;display:block;font-size:clamp(18px,5.1vw,43px);font-weight:900;line-height:1.05;text-shadow:0 2px 3px #3f0000;white-space:nowrap}
+    .game-card.grand .game-card-title{font-size:clamp(14px,4vw,34px)}
+    .game-card-sub{grid-area:sub;position:relative;z-index:2;align-self:end;font-size:clamp(12px,3.1vw,27px);color:#fff0c8;line-height:1.25}
+    .game-card-balls{grid-area:balls;position:relative;z-index:1;align-self:center;justify-self:start;display:flex;align-items:center;justify-content:flex-start;gap:clamp(7px,1.5vw,14px)}
+    .game-card-balls i{display:grid;place-items:center;width:clamp(46px,8vw,68px);aspect-ratio:1;border-radius:50%;border:2px solid #f2cb70;background:radial-gradient(circle at 30% 20%,#ff8b73,#ba1118 45%,#640308 84%);color:#ffeaaa;font-style:normal;font-weight:900;font-size:clamp(15px,4vw,34px);box-shadow:inset -5px -6px 9px #4b0000,0 3px 8px #340000}
+    .game-card.grand .game-card-balls{gap:clamp(4px,1vw,9px)}
+    .game-card.grand .game-card-balls i{width:clamp(35px,6.3vw,54px);font-size:clamp(10px,2.7vw,23px)}
+    .game-card-balls i.extra{background:radial-gradient(circle at 30% 20%,#fff1a2,#e4a41c 45%,#804000 85%);color:#2b1200}
+    .game-card-cta{grid-area:cta;position:relative;align-self:end;justify-self:end;padding:clamp(10px,2.1vw,18px) clamp(25px,6vw,51px);border:1px solid #fff1ae;border-radius:var(--radius);background:linear-gradient(#ffedae,#d99b2d);color:#8f110b;font-size:clamp(12px,3.2vw,28px);font-weight:900;white-space:nowrap}
+    .game-intro{position:absolute;z-index:3;left:8%;right:8%;top:9.5%;height:4.8%;display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(218,151,45,.55);color:#ffe8b5;text-align:center;font-size:clamp(13px,3.5vw,30px);letter-spacing:.01em}
+    .custom-picker{position:absolute;z-index:4;left:5.7%;top:16.1%;width:88.6%;height:52%;display:flex;flex-direction:column;color:#ffe5a0}
+    .custom-picker[hidden]{display:none}
+    .digit-slots{display:grid;grid-template-columns:repeat(4,1fr);gap:3%;height:20%}
+    .digit-slot{position:relative;border:2px solid #c57b1f;border-radius:var(--radius);background:#86100b;color:#ffe599;font-size:clamp(28px,8vw,68px);font-weight:900;cursor:pointer}
+    .digit-slot::after{content:attr(data-label);position:absolute;left:0;right:0;bottom:7%;font-size:clamp(8px,1.8vw,15px);font-weight:700;color:#dca444;letter-spacing:.08em}
+    .digit-slot.active{border-color:#fff5b5;background:#a41910;box-shadow:0 0 20px #ff9c22,inset 0 0 0 3px #ffd36a}
+    .digit-slot.active::after{color:#fff0a0}
+    .digit-help,.mark-help{margin:3% 0;text-align:center;font-size:clamp(12px,3.05vw,26px);font-weight:800;color:#ffe08a}
+    .digit-pad{flex:1;align-self:center;width:min(78%,560px);display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(4,1fr);align-items:center;justify-items:center;gap:3.5% 5%}
+    .digit-key,.number-key{border:2px solid #c57b1f;border-radius:var(--radius);background:linear-gradient(145deg,#a7140d,#610706);color:#ffe8a9;font-weight:900;cursor:pointer}
+    .digit-key{width:min(92%,105px);max-height:100%;aspect-ratio:1;border-radius:50%;padding:0;font-size:clamp(28px,7.2vw,61px);box-shadow:inset -5px -6px 11px rgba(45,0,0,.55),0 4px 10px rgba(30,0,0,.45)}
+    .digit-key[data-digit="0"]{grid-column:2;grid-row:4}
+    .custom-mark-summary{display:flex;align-items:center;justify-content:center;gap:1.2%;min-height:10%;font-size:clamp(10px,2.5vw,21px)}
+    .custom-mark-summary span{display:grid;place-items:center;width:10.7%;aspect-ratio:1;border:1.5px solid #e7b64f;border-radius:50%;background:#6a0705;font-weight:800}
+    .custom-mark-summary span.next{border-color:#fff5b5;background:#a41910;box-shadow:0 0 14px #ff9c22,inset 0 0 0 2px #ffd36a}
+    .custom-mark-summary span.extra{margin-left:3%;border-color:#ffe090;background:#a9680c;color:#fff1b2}
+    .number-pad{flex:1;display:grid;grid-template-columns:repeat(7,1fr);grid-template-rows:repeat(7,1fr);gap:1.5%}
+    .number-key{padding:0;font-size:clamp(10px,2.65vw,23px)}
+    .number-key.selected{border-color:#fff2ac;background:#d79a25;color:#4b0503;box-shadow:0 0 8px #ffb12d}
+    .number-key.special{border-color:#fff2ac;background:#f0c25a;color:#4b0503}
+    .option{border:2px solid #bd7218;transition:.16s ease;color:#ffe09a;background:linear-gradient(145deg,#a7140d,#610706);touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+    .option.selected{border-color:#fff0a1;box-shadow:0 0 16px #ff9c22,inset 0 0 0 3px #ffd36a,inset 0 0 24px rgba(255,132,20,.38)}
+    .four-grid{position:absolute;z-index:2;isolation:isolate;left:5.7%;top:16.1%;width:88.6%;height:52%;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(8,1fr);gap:1.15% 2.7%}
+    .four-grid[hidden],.mark-list[hidden]{display:none}
+    .four-grid::before,.mark-list::before{display:none}
+    .four-grid .option{position:relative;border-radius:var(--radius);cursor:pointer;display:flex;align-items:center;justify-content:center;padding:5% 3% 0;font-weight:900;font-size:clamp(19px,4.8vw,41px);text-shadow:0 2px 4px #480000}
+    .option-id{position:absolute;left:7%;top:7%;font-size:clamp(9px,2.05vw,17px);font-weight:700;color:#ffe48b;text-shadow:none}
+    .mark-list{position:absolute;z-index:2;isolation:isolate;left:5.7%;top:16.1%;width:88.6%;height:51.5%;display:grid;grid-template-rows:repeat(5,1fr);gap:2.4%}
+    .mark-list .option{position:relative;border-radius:var(--radius);cursor:pointer;display:flex;align-items:center;padding:1.5% 3% 1.5% 12%;gap:1.1%}
+    .mark-list .option-id{left:2.8%;top:34%;font-size:clamp(10px,2.7vw,23px)}
+    .mini-ball{display:grid;place-items:center;width:12.1%;aspect-ratio:1;border-radius:50%;font-size:clamp(11px,3.25vw,28px);font-weight:900;color:#fff9df;border:2px solid #f7d77e;text-shadow:0 1px 1px rgba(45,0,0,.55);box-shadow:0 2px 5px rgba(31,0,0,.24)}
+    .mini-ball.blue,.ball.blue{background:radial-gradient(circle at 32% 24%,#83d3ff 0 8%,#1688cf 42%,#07549a 78%,#043d76 100%)}
+    .mini-ball.green,.ball.green{background:radial-gradient(circle at 32% 24%,#d4f48b 0 8%,#79b93d 42%,#397d22 78%,#255d18 100%)}
+    .mini-ball.red,.ball.red{background:radial-gradient(circle at 32% 24%,#ff8c7c 0 8%,#e62f35 42%,#a60e1b 78%,#780714 100%)}
+    .mini-ball.extra{margin-left:2%;background:radial-gradient(circle at 32% 24%,#fff4ad 0 8%,#f6c945 44%,#d89412 78%,#a96606 100%);color:#361700;text-shadow:none;box-shadow:none}
+    .action-bar{position:absolute;z-index:3;isolation:isolate;left:5.7%;width:88.6%;height:6.7%;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:2.7%}
+    .action-bar::before{display:none}
+    .action-bar.four-actions{top:70.6%}
+    .action-bar.mark-actions{top:70%}
+    .action-btn{width:100%;height:100%;border:2px solid #fff0b5;border-radius:var(--radius);background:linear-gradient(#ffe9a3 0%,#eeb94b 65%,#bd781d 100%);color:#94150e;font-weight:900;font-size:clamp(14px,3.7vw,31px);box-shadow:0 4px 12px rgba(32,0,0,.55);cursor:pointer;text-shadow:0 1px rgba(255,255,255,.45)}
+    .action-btn[data-action^="refresh-"]{justify-self:start;width:92%;height:100%;border:2px solid #d69b32;background:linear-gradient(145deg,rgba(91,8,5,.9),rgba(54,3,2,.95));color:#f5c65c;font-size:clamp(13px,3.45vw,29px);box-shadow:inset 0 0 14px rgba(255,151,31,.12),0 3px 8px rgba(32,0,0,.4);text-shadow:none}
+    .action-btn:active{transform:translateY(2px);filter:brightness(.94)}
+    .home-final{left:14.5%;top:80.9%;width:71%;height:6.4%}
+    .result-card{position:absolute;z-index:3;left:5.3%;right:5.3%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(165deg,#86100b 0%,#570504 76%);border:2px solid #e6a629;border-radius:var(--radius);box-shadow:inset 0 0 26px rgba(255,113,20,.22),0 5px 14px rgba(30,0,0,.45)}
+    .result-card.four-result{top:38.5%;height:16.2%}
+    .result-card.mark-result{top:55.8%;height:15.7%}
+    .result-title{color:#f8ce65;font-weight:900;font-size:clamp(17px,4.6vw,39px);line-height:1;margin-bottom:2.3%;text-shadow:0 2px 3px #3e0000}
+    .summary{width:90%;display:flex;align-items:center;justify-content:center;gap:2.2%}
+    .summary.mark{width:96%;gap:1.2%}
+    .ball{display:grid;place-items:center;width:16%;aspect-ratio:1;border-radius:50%;font-weight:900;font-size:clamp(19px,5.2vw,44px);color:#fff9df;text-shadow:0 1px 2px rgba(45,0,0,.55);background:radial-gradient(circle at 32% 24%,#ff8c7c 0 8%,#e62f35 42%,#a60e1b 78%,#780714 100%);border:3px solid #f7d77e;box-shadow:0 3px 8px rgba(31,0,0,.3)}
+    .summary.mark .ball{width:11.7%;font-size:clamp(13px,3.45vw,30px)}
+    .summary.mark .ball.extra{background:radial-gradient(circle at 32% 24%,#fff4ad 0 8%,#f6c945 44%,#d89412 78%,#a96606 100%);color:#361700;text-shadow:none;box-shadow:none}
+    .event-header{position:absolute;z-index:2;left:0;top:0;width:100%;height:auto;display:block;pointer-events:none}
+    .event-footer{position:absolute;z-index:2;left:0;bottom:0;width:100%;height:auto;display:block;pointer-events:none}
+    .done-heading{position:absolute;z-index:3;top:28%;left:8%;right:8%;text-align:center;color:#ffe18a}
+    .done-heading strong{display:block;font-size:clamp(25px,7vw,60px);text-shadow:0 3px 5px #420000}
+    .done-heading span{display:block;margin-top:2%;font-size:clamp(12px,3.1vw,27px);color:#ffe8bb}
+    .plus{color:#ffd36c;font-size:clamp(18px,4.6vw,40px);font-weight:700}
+    .toast{position:absolute;z-index:5;left:50%;bottom:5%;transform:translate(-50%,20px);padding:12px 18px;border:1px solid #ffd15d;border-radius:var(--radius);background:rgba(50,3,2,.94);color:#ffe594;font-weight:700;opacity:0;pointer-events:none;transition:.2s;white-space:nowrap}
+    .toast.show{opacity:1;transform:translate(-50%,0)}
+    @media (min-width:854px){body{padding:20px}.phone{border-radius:var(--radius)}}
+    @media (prefers-reduced-motion:reduce){.screen.active{animation:none}.option{transition:none}}
+  </style>
+</head>
+<body>
+  <main class="phone" aria-live="polite">
+    <section class="screen active" data-screen="login" aria-label="Login">
+      <img class="art" src="assets/cnymobile01.png" alt="Annual Dinner 2027 Lucky Draw welcome page">
+      <button class="hotspot login" data-action="login" aria-label="Login with company email">Login</button>
+    </section>
+
+    <section class="screen" data-screen="home" aria-label="Choose a lucky draw game">
+      <img class="art" src="assets/cny-mobile-content-bg.png" alt="Chinese New Year lucky draw background">
+      <img class="event-header" src="assets/cny-event-header-v3.png" alt="Annual Dinner 2027 Lucky Draw">
+      <img class="event-footer" src="assets/cny-event-footer.png" alt="Festive golden ram stage">
+      <div class="home-intro-cover">
+        <strong>CHOOSE A DRAW</strong>
+        <span>Select a game to continue</span>
+      </div>
+      <button class="hotspot game-card game4d" data-action="open-4d" aria-label="Choose Lucky Draw">
+        <span class="game-card-title">LUCKY 4D</span>
+        <span class="game-card-balls"><i>0</i><i>0</i><i>0</i><i>0</i></span>
+        <span class="game-card-sub">Choose your<br>4-digit lucky number</span>
+        <span class="game-card-cta">SELECT ›</span>
+      </button>
+      <button class="hotspot game-card grand gamemark" data-action="open-mark" aria-label="Choose Grand Prize Lucky Draw">
+        <span class="game-card-title">GRAND PRIZE DRAW</span>
+        <span class="game-card-balls"><i>08</i><i>12</i><i>19</i><i>27</i><i>36</i><i>45</i><i class="extra">48</i></span>
+        <span class="game-card-sub">Choose your<br>6+1 lucky numbers</span>
+        <span class="game-card-cta">SELECT ›</span>
+      </button>
+      <button class="mode-fab" id="modeFab" data-action="toggle-mode-menu" aria-label="Change number selection mode" aria-expanded="false">⇄</button>
+      <div class="mode-menu" id="modeMenu" hidden>
+        <div class="mode-menu-title">NUMBER SELECTION MODE</div>
+        <button class="mode-choice active" data-action="set-random">QUICK PICK</button>
+        <button class="mode-choice" data-action="set-custom">CHOOSE MY OWN</button>
+      </div>
+    </section>
+
+    <section class="screen" data-screen="four" aria-label="Choose one 4-digit lucky number">
+      <img class="art" src="assets/cny-mobile-content-bg.png" alt="Chinese New Year game background">
+      <img class="event-footer" src="assets/cny-event-footer.png" alt="Festive golden ram stage">
+      <div class="game-topbar"><div class="game-topbar-copy"><strong>LUCKY 4D</strong></div></div>
+      <button class="hotspot back" data-action="home" aria-label="Back"></button>
+      <div class="game-intro">Select one 4-digit lucky number</div>
+      <div class="four-grid" aria-label="4D number choices"></div>
+      <div class="custom-picker" id="customFour" hidden>
+        <div class="digit-slots" aria-label="Selected 4D digits"></div>
+        <div class="digit-help" id="digitHelp">Selecting digit 1 of 4</div>
+        <div class="digit-pad" aria-label="Digit keypad"></div>
+      </div>
+      <div class="action-bar four-actions">
+        <button class="action-btn" data-action="refresh-4d">NEW BATCH</button>
+        <button class="action-btn" data-action="save-4d">CONFIRM</button>
+      </div>
+    </section>
+
+    <section class="screen" data-screen="mark" aria-label="Choose one Mark Six combination">
+      <img class="art" src="assets/cny-mobile-content-bg.png" alt="Chinese New Year game background">
+      <img class="event-footer" src="assets/cny-event-footer.png" alt="Festive golden ram stage">
+      <div class="game-topbar"><div class="game-topbar-copy"><strong>GRAND PRIZE DRAW</strong></div></div>
+      <button class="hotspot back" data-action="home" aria-label="Back"></button>
+      <div class="game-intro">Select one 6+1 lucky number combination</div>
+      <div class="mark-list" aria-label="Mark Six combination choices"></div>
+      <div class="custom-picker" id="customMark" hidden>
+        <div class="custom-mark-summary" aria-label="Selected Grand Prize numbers"></div>
+        <div class="mark-help" id="markHelp">Select main number 1 of 6</div>
+        <div class="number-pad" aria-label="Numbers 1 to 49"></div>
+      </div>
+      <div class="action-bar mark-actions">
+        <button class="action-btn" data-action="refresh-mark">NEW BATCH</button>
+        <button class="action-btn" data-action="save-mark">CONFIRM</button>
+      </div>
+    </section>
+
+    <section class="screen" data-screen="done" aria-label="Selection successfully submitted">
+      <img class="art" src="assets/cny-mobile-content-bg.png" alt="Chinese New Year game background">
+      <img class="event-header" src="assets/cny-event-header-v3.png" alt="Annual Dinner 2027 Lucky Draw">
+      <img class="event-footer" src="assets/cny-event-footer.png" alt="Festive golden ram stage">
+      <button class="hotspot back" data-action="home" aria-label="Back"></button>
+      <div class="done-heading"><strong>YOU’RE ALL SET!</strong><span>Your lucky numbers have been successfully submitted.</span></div>
+      <div class="result-card four-result">
+        <div class="result-title">LUCKY 4D</div>
+        <div class="summary four" id="fourSummary" aria-label="Selected Lucky Draw number"></div>
+      </div>
+      <div class="result-card mark-result">
+        <div class="result-title">GRAND PRIZE LUCKY DRAW</div>
+        <div class="summary mark" id="markSummary" aria-label="Selected Grand Prize Lucky Draw combination"></div>
+      </div>
+      <button class="hotspot home-final" data-action="home" aria-label="Back to home">Back to home</button>
+    </section>
+    <div class="profile-card" id="profileCard" hidden>
+      <span class="profile-avatar" aria-hidden="true"></span>
+      <span class="profile-copy"><span class="profile-name">Hi, Ethan Lim</span><span class="profile-company">MERQURI</span></span>
+      <button class="logout-btn" data-action="logout">LOGOUT</button>
+    </div>
+    <div class="account-menu" id="accountMenu" hidden>
+      <button class="account-trigger" id="accountTrigger" type="button" aria-label="Open account menu" aria-expanded="false"></button>
+      <div class="account-dropdown" id="accountDropdown" hidden>
+        <div class="account-user">Ethan Lim</div>
+        <div class="account-company">MERQURI</div>
+        <button class="account-logout" data-action="logout">LOGOUT</button>
+      </div>
+    </div>
+    <div class="toast" id="toast" role="status"></div>
+  </main>
+
+  <script>
+    let fourNumbers=[], fourIds=[], markSets=[], markIds=[];
+    let fourChoice=null, markChoice=null, savedFour=null, selectionMode='random';
+    let customDigits=['','','',''], activeDigit=0, customMain=[], customExtra=null;
+    const screens=[...document.querySelectorAll('.screen')];
+    const fourGrid=document.querySelector('.four-grid');
+    const markList=document.querySelector('.mark-list');
+    const customFour=document.getElementById('customFour');
+    const customMark=document.getElementById('customMark');
+
+    function show(name){
+      screens.forEach(s=>s.classList.toggle('active',s.dataset.screen===name));
+      document.getElementById('profileCard').hidden=name!=='home';
+      document.getElementById('accountMenu').hidden=name==='login'||name==='home';
+      closeAccountMenu();
+      window.scrollTo({top:0,behavior:'instant'});
+    }
+    function closeAccountMenu(){
+      const dropdown=document.getElementById('accountDropdown');
+      const trigger=document.getElementById('accountTrigger');
+      dropdown.hidden=true; trigger.setAttribute('aria-expanded','false');
+    }
+    document.getElementById('accountTrigger').addEventListener('click',e=>{
+      e.stopPropagation();
+      const dropdown=document.getElementById('accountDropdown');
+      dropdown.hidden=!dropdown.hidden;
+      e.currentTarget.setAttribute('aria-expanded',String(!dropdown.hidden));
+    });
+    document.addEventListener('click',closeAccountMenu);
+    function closeModeMenu(){
+      document.getElementById('modeMenu').hidden=true;
+      document.getElementById('modeFab').setAttribute('aria-expanded','false');
+    }
+    function applyMode(mode){
+      selectionMode=mode;
+      document.querySelectorAll('.mode-choice').forEach((b,i)=>b.classList.toggle('active',(mode==='random'&&i===0)||(mode==='custom'&&i===1)));
+      fourGrid.hidden=mode==='custom'; markList.hidden=mode==='custom';
+      customFour.hidden=mode!=='custom'; customMark.hidden=mode!=='custom';
+      document.querySelectorAll('[data-action^="refresh-"]').forEach(b=>b.textContent=mode==='custom'?'CLEAR':'NEW BATCH');
+      fourChoice=null; markChoice=null; closeModeMenu();
+    }
+    function randomUnique(count,min,max,formatter=n=>String(n)){
+      const values=new Set();
+      while(values.size<count) values.add(Math.floor(Math.random()*(max-min+1))+min);
+      return [...values].map(formatter);
+    }
+    function makeOptions(host,items,ids,type){
+      host.innerHTML='';
+      items.forEach((item,i)=>{
+        const b=document.createElement('button');
+        b.className='option';
+        b.type='button'; b.dataset.index=i;
+        b.setAttribute('aria-label',type==='four'?`Select 4D number ${item}`:`Select Mark Six combination ${i+1}: ${item.join(', ')}`);
+        if(type==='four') b.innerHTML=`<span class="option-id">${ids[i]}</span>${item}`;
+        else b.innerHTML=`<span class="option-id">${ids[i]}</span>${item.slice(0,6).map((n,j)=>`<span class="mini-ball ${['blue','green','red'][j%3]}">${n}</span>`).join('')}<span class="plus">+</span><span class="mini-ball extra">${item[6]}</span>`;
+        b.addEventListener('click',()=>{
+          host.querySelectorAll('.option').forEach(x=>x.classList.remove('selected'));
+          b.classList.add('selected');
+          if(type==='four') fourChoice=i; else markChoice=i;
+        });
+        host.appendChild(b);
+      });
+    }
+    function refreshFour(){
+      fourNumbers=randomUnique(24,0,9999,n=>String(n).padStart(4,'0'));
+      fourIds=randomUnique(24,100,999);
+      fourChoice=null;
+      makeOptions(fourGrid,fourNumbers,fourIds,'four');
+    }
+    function refreshMark(){
+      markSets=Array.from({length:5},()=>randomUnique(7,1,49,n=>String(n).padStart(2,'0')));
+      markIds=randomUnique(5,100,999);
+      markChoice=null;
+      makeOptions(markList,markSets,markIds,'mark');
+    }
+    refreshFour();
+    refreshMark();
+
+    function renderCustomFour(){
+      customFour.querySelector('.digit-slots').innerHTML=customDigits.map((n,i)=>`<button class="digit-slot ${i===activeDigit?'active':''}" data-digit-slot="${i}" data-label="DIGIT ${i+1}" type="button">${n||'–'}</button>`).join('');
+      document.getElementById('digitHelp').textContent=customDigits.every(Boolean)?'Your 4 digits are complete':`Selecting digit ${activeDigit+1} of 4`;
+    }
+    customFour.querySelector('.digit-pad').innerHTML=[1,2,3,4,5,6,7,8,9,0].map(i=>`<button class="digit-key" data-digit="${i}" type="button">${i}</button>`).join('');
+    renderCustomFour();
+    function renderCustomMark(){
+      const chosen=customMain.map(n=>`<span>${String(n).padStart(2,'0')}</span>`).join('');
+      const blanks=Array.from({length:6-customMain.length},(_,i)=>`<span class="${i===0?'next':''}">–</span>`).join('');
+      const choosingExtra=customMain.length===6&&customExtra===null;
+      customMark.querySelector('.custom-mark-summary').innerHTML=chosen+blanks+'<b class="plus">+</b>'+`<span class="extra ${choosingExtra?'next':''}">${customExtra?String(customExtra).padStart(2,'0'):'–'}</span>`;
+      document.getElementById('markHelp').textContent=customMain.length<6?`Select main number ${customMain.length+1} of 6`:customExtra===null?'Select the special number':'Your 6+1 numbers are complete';
+      customMark.querySelectorAll('.number-key').forEach(b=>{
+        const n=Number(b.dataset.number); b.classList.toggle('selected',customMain.includes(n)); b.classList.toggle('special',customExtra===n);
+      });
+    }
+    customMark.querySelector('.number-pad').innerHTML=Array.from({length:49},(_,i)=>`<button class="number-key" data-number="${i+1}" type="button">${String(i+1).padStart(2,'0')}</button>`).join('');
+    renderCustomMark();
+    customFour.addEventListener('click',e=>{
+      if(e.target.dataset.digitSlot!==undefined){activeDigit=Number(e.target.dataset.digitSlot);renderCustomFour();return}
+      if(e.target.dataset.digit!==undefined){customDigits[activeDigit]=e.target.dataset.digit;const nextEmpty=customDigits.findIndex((n,i)=>i>activeDigit&&n==='');activeDigit=nextEmpty<0?activeDigit:nextEmpty;renderCustomFour()}
+    });
+    customMark.addEventListener('click',e=>{
+      const key=e.target.closest('[data-number]'); if(!key)return; const n=Number(key.dataset.number);
+      if(customMain.includes(n)){customMain=customMain.filter(x=>x!==n)}
+      else if(customExtra===n){customExtra=null}
+      else if(customMain.length<6){customMain.push(n)}
+      else if(customExtra===null){customExtra=n}
+      else{toast('Remove the special number before choosing another')}
+      renderCustomMark();
+    });
+
+    function ball(n,i=0,extra=false){return `<span class="ball ${extra?'extra':['blue','green','red'][i%3]}">${n}</span>`}
+    function renderDone(){
+      const four=savedFour||'----';
+      document.getElementById('fourSummary').innerHTML=four.split('').map(n=>`<span class="ball">${n}</span>`).join('');
+      const nums=markSets[markChoice];
+      document.getElementById('markSummary').innerHTML=nums.slice(0,6).map((n,i)=>ball(n,i)).join('')+'<span class="plus">+</span>'+ball(nums[6],6,true);
+      localStorage.setItem('cny2027Selection',JSON.stringify({fourD:savedFour,markSix:nums,submittedAt:new Date().toISOString()}));
+    }
+    function toast(text){
+      const el=document.getElementById('toast'); el.textContent=text; el.classList.add('show');
+      clearTimeout(toast.timer); toast.timer=setTimeout(()=>el.classList.remove('show'),1800);
+    }
+
+    document.addEventListener('click',e=>{
+      const action=e.target.closest('[data-action]')?.dataset.action;
+      if(!action)return;
+      if(action==='login') show('home');
+      if(action==='logout'){localStorage.removeItem('cny2027Selection');show('login')}
+      if(action==='home') show('home');
+      if(action==='open-4d') show('four');
+      if(action==='open-mark') show('mark');
+      if(action==='toggle-mode-menu'){
+        const menu=document.getElementById('modeMenu'); menu.hidden=!menu.hidden;
+        document.getElementById('modeFab').setAttribute('aria-expanded',String(!menu.hidden));
+      }
+      if(action==='set-random') applyMode('random');
+      if(action==='set-custom') applyMode('custom');
+      if(action==='refresh-4d'){if(selectionMode==='custom'){customDigits=['','','',''];activeDigit=0;renderCustomFour()}else refreshFour()}
+      if(action==='refresh-mark'){if(selectionMode==='custom'){customMain=[];customExtra=null;renderCustomMark()}else refreshMark()}
+      if(action==='save-4d'){
+        if(selectionMode==='custom'){
+          if(customDigits.some(n=>n==='')){toast('Please choose all 4 digits');return}
+          savedFour=customDigits.join('');
+        }else{
+          if(fourChoice===null){toast('Please select one number');return}
+          savedFour=fourNumbers[fourChoice];
+        }
+        toast(`Lucky 4D ${savedFour} saved`);setTimeout(()=>show('mark'),500)
+      }
+      if(action==='save-mark'){
+        if(selectionMode==='custom'){
+          if(customMain.length!==6||customExtra===null){toast('Please choose 6 main numbers and 1 special number');return}
+          markSets=[...markSets,[...customMain,customExtra]];markChoice=markSets.length-1;
+        }else if(markChoice===null){toast('Please select one combination');return}
+        renderDone();show('done')
+      }
+    });
+  </script>
+</body>
+</html>
